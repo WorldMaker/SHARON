@@ -53,3 +53,9 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 
 client.login(BotToken)
   .catch(err => console.error('Error logging in', err))
+
+// Try to cleanly disconnect
+process.on('SIGINT', () => {
+  client.destroy()
+    .catch(err => console.error(err))
+})
