@@ -39,13 +39,13 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
     if (oldMember && oldMember.voiceChannel) {
       const oldDoc = (nlp as any)(oldMember.voiceChannel.name)
       if (oldDoc.has('#Ship')) {
-        console.log(`${oldMember.displayName} left ${oldMember.voiceChannel.name}`)
+        console.log(`${oldMember.displayName} left ${oldMember.voiceChannel.parent.name} ${oldMember.voiceChannel.name}`)
       }
     }
     if (newMember && newMember.voiceChannel) {
       const newDoc = (nlp as any)(newMember.voiceChannel.name)
       if (newDoc.has('#Ship')) {
-        console.log(`${newMember.displayName} joined ${newMember.voiceChannel.name}`)
+        console.log(`${newMember.displayName} joined ${newMember.voiceChannel.parent.name} ${newMember.voiceChannel.name}`)
       }
     }
   }
