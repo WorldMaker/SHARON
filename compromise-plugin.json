@@ -1,0 +1,9 @@
+{
+    "words": {
+        "fleet": "Fleet",
+        "galleon": "Ship",
+        "brig": "Ship",
+        "brigantine": "Ship",
+        "sloop": "Ship"
+    }
+}

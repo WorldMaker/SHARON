@@ -1,0 +1,25 @@
+{
+  "name": "sharon",
+  "version": "1.0.0",
+  "description": "Discord bot",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "prestart": "npm run build",
+    "start": "node index.js",
+    "test": "tsc -p ."
+  },
+  "author": "Max Battcher <me@worldmaker.net>",
+  "license": "MIT",
+  "dependencies": {
+    "compromise": "^11.12.4",
+    "discord.js": "^11.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.12",
+    "tslint": "^5.11.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.2.1",
+    "typescript-tslint-plugin": "^0.1.2"
+  }
+}
