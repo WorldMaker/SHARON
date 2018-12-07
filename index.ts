@@ -15,37 +15,54 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
 
-client.on('channelUpdate', (oldChannel, newChannel) => {
+async function log (item: Discord.Channel | Discord.GuildMember | null, message: string) {
+  if (item && (item instanceof Discord.GuildChannel || item instanceof Discord.GuildMember)) {
+    const logChannel = item.guild.channels.find(c => c.name === 'sharon-log')
+    if (logChannel && logChannel instanceof Discord.TextChannel) {
+      await logChannel.send(message)
+    } else {
+      console.log(message)
+    }
+  }
+}
+
+client.on('channelUpdate', async (oldChannel, newChannel) => {
   if (newChannel instanceof Discord.CategoryChannel) {
     const doc = (nlp as any)(newChannel.name)
     const isFleet = doc.has('#Fleet')
     if (isFleet) {
-      console.log('Fleet updated', newChannel.name)
+      if (oldChannel instanceof Discord.CategoryChannel) {
+        const doc = (nlp as any)(oldChannel.name)
+        const isFleet = doc.has('#Fleet')
+        if (isFleet) {
+          await log(oldChannel, `Closed fleet: ${oldChannel.name}`)
+        }
+      }
+      await log(newChannel, `New fleet: ${newChannel.name}`)
     }
-  } else if ((oldChannel instanceof Discord.GuildChannel || oldChannel instanceof Discord.VoiceChannel)
-      && (newChannel instanceof Discord.GuildChannel || newChannel instanceof Discord.VoiceChannel)) {
+  } else if ((oldChannel instanceof Discord.VoiceChannel) && (newChannel instanceof Discord.VoiceChannel)) {
     const oldDoc = (nlp as any)(oldChannel.name)
     const newDoc = (nlp as any)(newChannel.name)
     const oldShip = oldDoc.match('#Ship')
     const newShip = newDoc.match('#Ship')
     if (oldShip.length || newShip.length) {
-      console.log(`Ship change ${oldChannel.name} -> ${newChannel.name}`)
+      await log(newChannel, `Ship change ${oldChannel.name} ➡ ${newChannel.name}`)
     }
   }
 })
 
-client.on('voiceStateUpdate', (oldMember, newMember) => {
+client.on('voiceStateUpdate', async (oldMember, newMember) => {
   if (!oldMember || !newMember || oldMember.voiceChannelID !== newMember.voiceChannelID) {
     if (oldMember && oldMember.voiceChannel) {
       const oldDoc = (nlp as any)(oldMember.voiceChannel.name)
       if (oldDoc.has('#Ship')) {
-        console.log(`${oldMember.displayName} left ${oldMember.voiceChannel.parent.name} ${oldMember.voiceChannel.name}`)
+        await log(oldMember, `${oldMember.displayName} left ${oldMember.voiceChannel.parent.name} ${oldMember.voiceChannel.name}`)
       }
     }
     if (newMember && newMember.voiceChannel) {
       const newDoc = (nlp as any)(newMember.voiceChannel.name)
       if (newDoc.has('#Ship')) {
-        console.log(`${newMember.displayName} joined ${newMember.voiceChannel.parent.name} ${newMember.voiceChannel.name}`)
+        await log(newMember, `${newMember.displayName} joined ${newMember.voiceChannel.parent.name} ${newMember.voiceChannel.name}`)
       }
     }
   }
@@ -56,6 +73,7 @@ client.login(BotToken)
 
 // Try to cleanly disconnect
 process.on('SIGINT', () => {
+  console.log('Logging out…')
   client.destroy()
     .catch(err => console.error(err))
 })
