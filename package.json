@@ -15,7 +15,9 @@
     "compromise": "^11.12.4",
     "discord.js": "^11.4.2",
     "immer": "^1.9.3",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-observable": "^1.0.0",
+    "rxjs": "^6.3.3"
   },
   "devDependencies": {
     "@types/node": "^10.12.12",

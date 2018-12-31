@@ -7,7 +7,8 @@ export enum ActionType {
   DroppedShip = 'SHIP_DROPPED',
   JoinedShip = 'SHIP_JOINED',
   LeftShip = 'SHIP_LEFT',
-  NewFleet = 'FLEET_NEW'
+  NewFleet = 'FLEET_NEW',
+  Other = '__OTHER_ACTIONS__' // For default typing in case statements
 }
 
 export interface AddedShipAction {
@@ -81,6 +82,10 @@ export function newFleet (fleet: FleetInfo): NewFleetAction {
   return { type: ActionType.NewFleet, fleet }
 }
 
+export interface OtherAction {
+  type: ActionType.Other
+}
+
 export type Action = AddedShipAction
   | ChangedShipAction
   | ClosedFleetAction
@@ -88,3 +93,4 @@ export type Action = AddedShipAction
   | JoinedShipAction
   | LeftShipAction
   | NewFleetAction
+  | OtherAction
