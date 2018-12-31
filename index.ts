@@ -1,11 +1,16 @@
-import nlp from 'compromise'
 import * as Discord from 'discord.js'
-import * as nlpPlugin from './compromise-plugin.json'
+import { createStore } from 'redux'
+import { closedFleet, newFleet, changedShip, droppedShip, addedShip, joinedShip, leftShip } from './actions'
+import { ChannelType, getChannelInfo, getFleetInfo, getPlayerInfo } from './model'
+import reducer from './reducer'
 import { BotToken } from './secrets.json'
 
-nlp.plugin(nlpPlugin)
-
 const client = new Discord.Client()
+
+const store = createStore(reducer)
+
+// TEMPORARY: Log SHARON's memory to console
+store.subscribe(() => console.log(JSON.stringify(store.getState())))
 
 client.on('error', err => {
   console.error(err)
@@ -27,43 +32,50 @@ async function log (item: Discord.Channel | Discord.GuildMember | null, message:
 }
 
 client.on('channelUpdate', async (oldChannel, newChannel) => {
-  if (newChannel instanceof Discord.CategoryChannel) {
-    const doc = (nlp as any)(newChannel.name)
-    const isFleet = doc.has('#Fleet')
-    if (isFleet) {
-      if (oldChannel instanceof Discord.CategoryChannel) {
-        const doc = (nlp as any)(oldChannel.name)
-        const isFleet = doc.has('#Fleet')
-        if (isFleet) {
-          await log(oldChannel, `Closed fleet: ${oldChannel.name}`)
-        }
-      }
-      await log(newChannel, `New fleet: ${newChannel.name}`)
-    }
-  } else if ((oldChannel instanceof Discord.VoiceChannel) && (newChannel instanceof Discord.VoiceChannel)) {
-    const oldDoc = (nlp as any)(oldChannel.name)
-    const newDoc = (nlp as any)(newChannel.name)
-    const oldShip = oldDoc.match('#Ship')
-    const newShip = newDoc.match('#Ship')
-    if (oldShip.length || newShip.length) {
-      await log(newChannel, `Ship change ${oldChannel.name} ➡ ${newChannel.name}`)
-    }
+  const oldInfo = getChannelInfo(oldChannel)
+  const newInfo = getChannelInfo(newChannel)
+  if (oldInfo && oldInfo.type === ChannelType.Fleet) {
+    store.dispatch(closedFleet(oldInfo))
+    await log(oldChannel, `Closed fleet: ${oldInfo.name}`)
+  }
+  if (newInfo && newInfo.type === ChannelType.Fleet) {
+    store.dispatch(newFleet(newInfo))
+    await log(newChannel, `New fleet: ${newInfo.name}`)
+  }
+  if (oldInfo && oldInfo.type === ChannelType.Ship && (!newInfo || newInfo.type !== ChannelType.Ship)) {
+    const fleet = getFleetInfo((oldChannel as Discord.GuildChannel).parent)
+    store.dispatch(droppedShip(fleet, oldInfo))
+    await log(oldChannel, `Dropped ship: ${oldInfo.name}`)
+  }
+  if (newInfo && newInfo.type === ChannelType.Ship && (!oldInfo || oldInfo.type !== ChannelType.Ship)) {
+    const fleet = getFleetInfo((newChannel as Discord.GuildChannel).parent)
+    store.dispatch(addedShip(fleet, newInfo))
+    await log(newChannel, `Added ship: ${newInfo.name}`)
+  }
+  if (oldInfo && newInfo && oldInfo.type === ChannelType.Ship && newInfo.type === ChannelType.Ship) {
+    const fleet = getFleetInfo((newChannel as Discord.GuildChannel).parent)
+    store.dispatch(changedShip(fleet, oldInfo, newInfo))
+    await log(newChannel, `Ship change ${oldInfo.name} ➡ ${newInfo.name}`)
   }
 })
 
 client.on('voiceStateUpdate', async (oldMember, newMember) => {
-  if (!oldMember || !newMember || oldMember.voiceChannelID !== newMember.voiceChannelID) {
-    if (oldMember && oldMember.voiceChannel) {
-      const oldDoc = (nlp as any)(oldMember.voiceChannel.name)
-      if (oldDoc.has('#Ship')) {
-        await log(oldMember, `${oldMember.displayName} left ${oldMember.voiceChannel.parent.name} ${oldMember.voiceChannel.name}`)
-      }
+  if (oldMember && oldMember.voiceChannel) {
+    const oldPlayer = getPlayerInfo(oldMember)
+    const oldInfo = getChannelInfo(oldMember.voiceChannel)
+    const oldFleet = getFleetInfo(oldMember.voiceChannel.parent)
+    if (oldInfo && oldInfo.type === ChannelType.Ship) {
+      store.dispatch(leftShip(oldFleet, oldInfo, oldPlayer))
+      await log(oldMember, `${oldPlayer.name} left ${oldFleet.name} ${oldInfo.name}`)
     }
-    if (newMember && newMember.voiceChannel) {
-      const newDoc = (nlp as any)(newMember.voiceChannel.name)
-      if (newDoc.has('#Ship')) {
-        await log(newMember, `${newMember.displayName} joined ${newMember.voiceChannel.parent.name} ${newMember.voiceChannel.name}`)
-      }
+  }
+  if (newMember && newMember.voiceChannel) {
+    const newPlayer = getPlayerInfo(newMember)
+    const newInfo = getChannelInfo(newMember.voiceChannel)
+    const newFleet = getFleetInfo(newMember.voiceChannel.parent)
+    if (newInfo && newInfo.type === ChannelType.Ship) {
+      store.dispatch(joinedShip(newFleet, newInfo, newPlayer))
+      await log(newMember, `${newPlayer.name} joined ${newFleet.name} ${newInfo.name}`)
     }
   }
 })
