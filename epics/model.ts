@@ -1,6 +1,7 @@
 import * as Discord from 'discord.js'
 
 export const BasicLoggingChannel = 'sharon-log'
+export const ShoutMode = true
 
 export interface DiscordDependency {
   client: Discord.Client
@@ -9,6 +10,9 @@ export interface DiscordDependency {
 export async function log (client: Discord.Client, guildId: string | null, message: string | null) {
   if (!message) {
     return
+  }
+  if (ShoutMode) {
+    message = message.toLocaleUpperCase()
   }
   if (!guildId) {
     console.log(message)

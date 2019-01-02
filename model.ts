@@ -94,3 +94,11 @@ export function getChannelInfo (channel: Discord.Channel): FleetInfo | ShipInfo 
   }
   return null
 }
+
+export function isFleet (info: ShipInfo | FleetInfo | null): info is FleetInfo {
+  return !!info && info.type === ChannelType.Fleet
+}
+
+export function isShip (info: ShipInfo | FleetInfo | null): info is ShipInfo {
+  return !!info && info.type === ChannelType.Ship
+}

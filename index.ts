@@ -4,7 +4,7 @@ import { applyMiddleware, createStore } from 'redux'
 import { createEpicMiddleware } from 'redux-observable'
 import { from } from 'rxjs'
 import { throttleTime, concatMap, catchError } from 'rxjs/operators'
-import { closedFleet, newFleet, changedShip, droppedShip, addedShip, joinedShip, leftShip } from './actions'
+import { Action, checkAll, closedFleet, newFleet, changedShip, droppedShip, addedShip, joinedShip, leftShip } from './actions'
 import rootEpic from './epics'
 import { ChannelType, getChannelInfo, getFleetInfo, getPlayerInfo } from './model'
 import reducer from './reducer'
@@ -17,7 +17,7 @@ const StoreFile = 'store.json'
 async function main () {
   const client = new Discord.Client()
 
-  const epicMiddleware = createEpicMiddleware({
+  const epicMiddleware = createEpicMiddleware<Action, Action, Store>({
     dependencies: {
       client
     }
@@ -99,16 +99,28 @@ async function main () {
 
   await client.login(BotToken)
 
-  epicMiddleware.run(rootEpic as any) // TODO: Why the type conflict?
+  epicMiddleware.run(rootEpic)
+
+  store.dispatch(checkAll())
 
   // Try to cleanly disconnect
-  process.on('SIGINT', () => {
+  process.on('SIGINT', async () => {
     console.log('Logging out…')
     storage.unsubscribe()
-    client.destroy()
-      .catch(err => console.error(err))
-    fs.writeFile(StoreFile, JSON.stringify(store.getState()), { encoding: 'utf-8' })
-      .catch(err => console.error('Error saving store', err))
+    // TODO: Shutdown epics
+    try {
+      await client.destroy()
+    } catch (err) {
+      console.error('Error disconnecting', err)
+    }
+    console.log('Saving final state…')
+    try {
+      await fs.writeFile(StoreFile, JSON.stringify(store.getState()), { encoding: 'utf-8' })
+    } catch (err) {
+      console.error('Error saving state', err)
+    }
+    // Ensure the process exits
+    process.exit()
   })
 }
 
