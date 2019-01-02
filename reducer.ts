@@ -72,17 +72,25 @@ const reducer = produce((draft, action: Action) => {
     case ActionType.JoinedShip: {
       const ship = getShip(action.fleet, action.ship)
       const player = getPlayer(action.fleet, action.player)
-      delete ship.leaving[action.player.id]
       delete ship.left[action.player.id]
-      ship.visiting[action.player.id] = new Date().toJSON()
+      if (ship.leaving[action.player.id]) {
+        delete ship.leaving[action.player.id]
+        ship.active[action.player.id] = new Date().toJSON()
+      } else {
+        ship.visiting[action.player.id] = new Date().toJSON()
+      }
       player.info = action.player
     } break
     case ActionType.LeftShip: {
       const ship = getShip(action.fleet, action.ship)
       const player = getPlayer(action.fleet, action.player)
-      delete ship.visiting[action.player.id]
       delete ship.active[action.player.id]
-      ship.leaving[action.player.id] = new Date().toJSON()
+      if (ship.visiting[action.player.id]) {
+        delete ship.visiting[action.player.id]
+        ship.left[action.player.id] = new Date().toJSON()
+      } else {
+        ship.leaving[action.player.id] = new Date().toJSON()
+      }
       player.info = action.player
     } break
     case ActionType.NewFleet: {
