@@ -55,18 +55,18 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
 
 client.on('voiceStateUpdate', async (oldMember, newMember) => {
   if (oldMember && oldMember.voiceChannel) {
-    const oldPlayer = getPlayerInfo(oldMember)
     const oldInfo = getChannelInfo(oldMember.voiceChannel)
     const oldFleet = getFleetInfo(oldMember.voiceChannel.parent)
     if (oldInfo && oldInfo.type === ChannelType.Ship) {
+      const oldPlayer = getPlayerInfo(oldFleet, null, oldMember)
       store.dispatch(leftShip(oldFleet, oldInfo, oldPlayer))
     }
   }
   if (newMember && newMember.voiceChannel) {
-    const newPlayer = getPlayerInfo(newMember)
     const newInfo = getChannelInfo(newMember.voiceChannel)
     const newFleet = getFleetInfo(newMember.voiceChannel.parent)
     if (newInfo && newInfo.type === ChannelType.Ship) {
+      const newPlayer = getPlayerInfo(newFleet, newInfo, newMember)
       store.dispatch(joinedShip(newFleet, newInfo, newPlayer))
     }
   }

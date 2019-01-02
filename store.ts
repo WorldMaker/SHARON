@@ -6,13 +6,17 @@ export interface PlayerStore {
   }
 }
 
+export interface ShipPlayerStore {
+  readonly [id: string]: string | undefined
+}
+
 export interface ShipStore {
   readonly [shipId: string]: {
     readonly info: ShipInfo
-    readonly active: PlayerStore
-    readonly leaving: PlayerStore
-    readonly left: PlayerStore
-    readonly visiting: PlayerStore
+    readonly active: ShipPlayerStore
+    readonly leaving: ShipPlayerStore
+    readonly left: ShipPlayerStore
+    readonly visiting: ShipPlayerStore
   }
 }
 
@@ -21,6 +25,7 @@ export interface FleetStore {
     readonly active: boolean
     readonly info: FleetInfo
     readonly ships: ShipStore
+    readonly players: PlayerStore
   }
 }
 

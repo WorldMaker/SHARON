@@ -28,6 +28,9 @@ export interface ShipInfo {
 }
 
 export interface PlayerInfo {
+  fleetId: string
+  guildId: string
+  shipId: string | null
   id: string
   hoistRoleName: string | null
   name: string
@@ -64,8 +67,11 @@ export function getShipInfo (ship: Discord.VoiceChannel, doc: any = null): ShipI
   }
 }
 
-export function getPlayerInfo (player: Discord.GuildMember): PlayerInfo {
+export function getPlayerInfo (fleet: FleetInfo, ship: ShipInfo | null, player: Discord.GuildMember): PlayerInfo {
   return {
+    fleetId: fleet.id,
+    guildId: fleet.guildId,
+    shipId: ship && ship.id,
     id: player.id,
     hoistRoleName: player.hoistRole ? player.hoistRole.name : null,
     name: player.displayName,

@@ -1,6 +1,6 @@
 import produce from 'immer'
 import { Action, ActionType } from './actions'
-import { ShipInfo, FleetInfo } from './model'
+import { ShipInfo, FleetInfo, PlayerInfo } from './model'
 import { Store } from './store'
 
 const reducer = produce((draft, action: Action) => {
@@ -16,7 +16,8 @@ const reducer = produce((draft, action: Action) => {
       fleet = guild.fleets[info.id] = {
         active: true,
         info,
-        ships: {}
+        ships: {},
+        players: {}
       }
     }
     return fleet
@@ -34,6 +35,16 @@ const reducer = produce((draft, action: Action) => {
       }
     }
     return ship
+  }
+  const getPlayer = (fleetInfo: FleetInfo, info: PlayerInfo) => {
+    const fleet = getFleet(fleetInfo)
+    let player = fleet.players[info.id]
+    if (!player) {
+      player = fleet.players[info.id] = {
+        info
+      }
+    }
+    return player
   }
   switch (action.type) {
     case ActionType.AddedShip: {
@@ -60,22 +71,19 @@ const reducer = produce((draft, action: Action) => {
     } break
     case ActionType.JoinedShip: {
       const ship = getShip(action.fleet, action.ship)
-      ship.visiting[action.player.id] = {
-        info: action.player
-      }
+      const player = getPlayer(action.fleet, action.player)
+      delete ship.leaving[action.player.id]
+      delete ship.left[action.player.id]
+      ship.visiting[action.player.id] = new Date().toJSON()
+      player.info = action.player
     } break
     case ActionType.LeftShip: {
       const ship = getShip(action.fleet, action.ship)
-      if (ship.visiting[action.player.id]) {
-        const player = ship.visiting[action.player.id]
-        ship.leaving[action.player.id] = player
-        delete ship.visiting[action.player.id]
-      }
-      if (ship.active[action.player.id]) {
-        const player = ship.active[action.player.id]
-        ship.leaving[action.player.id] = player
-        delete ship.active[action.player.id]
-      }
+      const player = getPlayer(action.fleet, action.player)
+      delete ship.visiting[action.player.id]
+      delete ship.active[action.player.id]
+      ship.leaving[action.player.id] = new Date().toJSON()
+      player.info = action.player
     } break
     case ActionType.NewFleet: {
       const fleet = getFleet(action.fleet)
