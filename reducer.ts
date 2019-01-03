@@ -41,12 +41,29 @@ const reducer = produce((draft, action: Action) => {
     let player = fleet.players[info.id]
     if (!player) {
       player = fleet.players[info.id] = {
-        info
+        info,
+        activity: []
       }
     }
     return player
   }
   switch (action.type) {
+    case ActionType.ActivePlayer: {
+      const ship = getShip(action.fleet, action.ship)
+      const player = getPlayer(action.fleet, action.player)
+      if (ship.visiting[action.player.id]) {
+        ship.active[action.player.id] = ship.visiting[action.player.id]
+        delete ship.visiting[action.player.id]
+        if (!player.activity) {
+          player.activity = []
+        }
+        player.activity.push({
+          time: ship.active[action.player.id]!,
+          shipId: action.ship.id,
+          isActive: true
+        })
+      }
+    } break
     case ActionType.AddedShip: {
       const fleet = getFleet(action.fleet)
       fleet.ships[action.ship.id] = {
@@ -64,6 +81,22 @@ const reducer = produce((draft, action: Action) => {
     case ActionType.ClosedFleet: {
       const fleet = getFleet(action.fleet)
       fleet.active = false
+    } break
+    case ActionType.DeactivePlayer: {
+      const ship = getShip(action.fleet, action.ship)
+      const player = getPlayer(action.fleet, action.player)
+      if (ship.leaving[action.player.id]) {
+        ship.left[action.player.id] = ship.leaving[action.player.id]
+        delete ship.leaving[action.player.id]
+        if (!player.activity) {
+          player.activity = []
+        }
+        player.activity.push({
+          time: ship.left[action.player.id]!,
+          shipId: action.ship.id,
+          isActive: false
+        })
+      }
     } break
     case ActionType.DroppedShip: {
       const fleet = getFleet(action.fleet)

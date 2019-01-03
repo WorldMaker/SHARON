@@ -2,7 +2,7 @@ import * as Discord from 'discord.js'
 import { promises as fs } from 'fs'
 import { applyMiddleware, createStore } from 'redux'
 import { createEpicMiddleware } from 'redux-observable'
-import { Action, checkAll, closedFleet, newFleet, changedShip, droppedShip, addedShip, joinedShip, leftShip } from './actions'
+import { Action, checkAll, checkFleet, closedFleet, newFleet, changedShip, droppedShip, addedShip, joinedShip, leftShip } from './actions'
 import { StoreFile } from './epics/storage'
 import rootEpic from './epics'
 import { ChannelType, getChannelInfo, getFleetInfo, getPlayerInfo } from './model'
@@ -47,6 +47,7 @@ async function main () {
     }
     if (newInfo && newInfo.type === ChannelType.Fleet) {
       store.dispatch(newFleet(newInfo))
+      store.dispatch(checkFleet(newInfo))
     }
     if (oldInfo && oldInfo.type === ChannelType.Ship && (!newInfo || newInfo.type !== ChannelType.Ship)) {
       const fleet = getFleetInfo((oldChannel as Discord.GuildChannel).parent)

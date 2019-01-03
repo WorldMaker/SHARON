@@ -1,9 +1,10 @@
 import { CheckFleetAction, ClosedFleetAction, NewFleetAction, checkFleet, closedFleet, newFleet } from './fleet'
 import { CheckAllAction, CheckGuildAction, checkAll, checkGuild } from './guild'
-import { JoinedShipAction, LeftShipAction, leftShip, joinedShip } from './player'
+import { ActivePlayerAction, DeactivePlayerAction, activePlayer, deactivePlayer, JoinedShipAction, LeftShipAction, leftShip, joinedShip } from './player'
 import { AddedShipAction, addedShip, ChangedShipAction, changedShip, CheckShipAction, checkShip, DroppedShipAction, droppedShip } from './ship'
 
 export enum ActionType {
+  ActivePlayer = 'PLAYER_ACTIVE',
   AddedShip = 'SHIP_ADDED',
   ChangedShip = 'SHIP_CHANGED',
   CheckAll = 'CHECK',
@@ -11,6 +12,7 @@ export enum ActionType {
   CheckFleet = 'FLEET_CHECK',
   CheckShip = 'SHIP_CHECK',
   ClosedFleet = 'FLEET_CLOSED',
+  DeactivePlayer = 'PLAYER_DEACTIVE',
   DroppedShip = 'SHIP_DROPPED',
   JoinedShip = 'SHIP_JOINED',
   LeftShip = 'SHIP_LEFT',
@@ -22,13 +24,15 @@ export interface OtherAction {
   type: ActionType.Other
 }
 
-export type Action = AddedShipAction
+export type Action = ActivePlayerAction
+  | AddedShipAction
   | ChangedShipAction
   | CheckAllAction
   | CheckFleetAction
   | CheckGuildAction
   | CheckShipAction
   | ClosedFleetAction
+  | DeactivePlayerAction
   | DroppedShipAction
   | JoinedShipAction
   | LeftShipAction
@@ -36,6 +40,7 @@ export type Action = AddedShipAction
   | OtherAction
 
 export {
+  activePlayer,
   addedShip,
   changedShip,
   checkAll,
@@ -43,6 +48,7 @@ export {
   checkGuild,
   checkShip,
   closedFleet,
+  deactivePlayer,
   droppedShip,
   joinedShip,
   leftShip,

@@ -9,6 +9,8 @@ export const BasicLogInterval = 2 /* s */ * 1000 /* ms */
 
 function basicLogMessage (action: Action) {
   switch (action.type) {
+    case ActionType.ActivePlayer:
+      return [action.fleet.guildId, `${action.player.name} is **active** on ${action.fleet.name} ${action.ship.name}`]
     case ActionType.AddedShip:
       return [action.fleet.guildId, `**Added ship:** ${action.fleet.name} ${action.ship.name}`]
     case ActionType.ChangedShip:
@@ -21,6 +23,8 @@ function basicLogMessage (action: Action) {
       return [action.ship.guildId, `👓 Reviewing ship status: ${action.fleet.name} ${action.ship.name}`]
     case ActionType.ClosedFleet:
       return [action.fleet.guildId, `**Closed fleet:** ${action.fleet.name}`]
+    case ActionType.DeactivePlayer:
+      return [action.fleet.guildId, `${action.player.name} is **inactive** on ${action.fleet.name} ${action.ship.name}`]
     case ActionType.DroppedShip:
       return [action.fleet.guildId, `**Dropped ship:** ${action.fleet.name} ${action.ship.name}`]
     case ActionType.JoinedShip:
