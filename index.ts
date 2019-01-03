@@ -2,18 +2,13 @@ import * as Discord from 'discord.js'
 import { promises as fs } from 'fs'
 import { applyMiddleware, createStore } from 'redux'
 import { createEpicMiddleware } from 'redux-observable'
-import { from } from 'rxjs'
-import { concatMap, catchError, windowTime, switchMap, last } from 'rxjs/operators'
 import { Action, checkAll, closedFleet, newFleet, changedShip, droppedShip, addedShip, joinedShip, leftShip } from './actions'
+import { StoreFile } from './epics/storage'
 import rootEpic from './epics'
 import { ChannelType, getChannelInfo, getFleetInfo, getPlayerInfo } from './model'
 import reducer from './reducer'
 import { BotToken } from './secrets.json'
 import { Store } from './store'
-import { toObservable } from './util/redux'
-
-const StoreFile = 'store.json'
-const StorageInterval = 5 /* m */ * 60 /* s */ * 1000 /* ms */
 
 async function main () {
   const client = new Discord.Client()
@@ -35,19 +30,6 @@ async function main () {
   }
 
   const store = createStore(reducer, baseState, applyMiddleware(epicMiddleware))
-
-  const store$ = toObservable(store)
-
-  const storage = store$.pipe(
-    windowTime(StorageInterval), // no more than once every ~5 minutes
-    switchMap(window => window.pipe(last())),
-    concatMap(state => from(fs.writeFile(StoreFile, JSON.stringify(state), { encoding: 'utf-8' }))),
-    catchError((err, caught) => {
-      console.error('Error saving state', err)
-      return caught // retry
-    })
-  )
-    .subscribe(undefined, (err: any) => console.error(err), () => console.log('Stopped saving store'))
 
   client.on('error', err => {
     console.error(err)
@@ -108,7 +90,6 @@ async function main () {
   // Try to cleanly disconnect
   process.on('SIGINT', async () => {
     console.log('Logging out…')
-    storage.unsubscribe()
     // TODO: Shutdown epics
     try {
       await client.destroy()

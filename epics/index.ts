@@ -5,6 +5,7 @@ import checkGuildEpic from './checks/guild'
 import checkFleetEpic from './checks/fleet'
 import checkShipEpic from './checks/ship'
 import checkSometimesEpic from './checks/sometimes'
+import storageEpic from './storage'
 
 const rootEpic = combineEpics(
   basicLoggingEpic,
@@ -12,7 +13,8 @@ const rootEpic = combineEpics(
   checkFleetEpic,
   checkGuildEpic,
   checkShipEpic,
-  checkSometimesEpic
+  checkSometimesEpic,
+  storageEpic
 )
 
 export default rootEpic
