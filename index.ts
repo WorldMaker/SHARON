@@ -2,10 +2,11 @@ import * as Discord from 'discord.js'
 import { promises as fs } from 'fs'
 import { applyMiddleware, createStore } from 'redux'
 import { createEpicMiddleware } from 'redux-observable'
-import { Action, checkAll, checkFleet, closedFleet, newFleet, changedShip, droppedShip, addedShip, joinedShip, leftShip } from './actions'
+import { Action, checkAll } from './actions'
 import { StoreFile } from './epics/storage'
 import rootEpic from './epics'
-import { ChannelType, getChannelInfo, getFleetInfo, getPlayerInfo } from './model'
+import channelUpdate from './events/channel-update'
+import voiceStateUpdate from './events/voice-state-update'
 import reducer from './reducer'
 import { BotToken } from './secrets.json'
 import { Store } from './store'
@@ -31,56 +32,10 @@ async function main () {
 
   const store = createStore(reducer, baseState, applyMiddleware(epicMiddleware))
 
-  client.on('error', err => {
-    console.error(err)
-  })
-
-  client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`)
-  })
-
-  client.on('channelUpdate', async (oldChannel, newChannel) => {
-    const oldInfo = getChannelInfo(oldChannel)
-    const newInfo = getChannelInfo(newChannel)
-    if (oldInfo && oldInfo.type === ChannelType.Fleet) {
-      store.dispatch(closedFleet(oldInfo))
-    }
-    if (newInfo && newInfo.type === ChannelType.Fleet) {
-      store.dispatch(newFleet(newInfo))
-      store.dispatch(checkFleet(newInfo))
-    }
-    if (oldInfo && oldInfo.type === ChannelType.Ship && (!newInfo || newInfo.type !== ChannelType.Ship)) {
-      const fleet = getFleetInfo((oldChannel as Discord.GuildChannel).parent)
-      store.dispatch(droppedShip(fleet, oldInfo))
-    }
-    if (newInfo && newInfo.type === ChannelType.Ship && (!oldInfo || oldInfo.type !== ChannelType.Ship)) {
-      const fleet = getFleetInfo((newChannel as Discord.GuildChannel).parent)
-      store.dispatch(addedShip(fleet, newInfo))
-    }
-    if (oldInfo && newInfo && oldInfo.type === ChannelType.Ship && newInfo.type === ChannelType.Ship) {
-      const fleet = getFleetInfo((newChannel as Discord.GuildChannel).parent)
-      store.dispatch(changedShip(fleet, oldInfo, newInfo))
-    }
-  })
-
-  client.on('voiceStateUpdate', async (oldMember, newMember) => {
-    if (oldMember && oldMember.voiceChannel) {
-      const oldInfo = getChannelInfo(oldMember.voiceChannel)
-      const oldFleet = getFleetInfo(oldMember.voiceChannel.parent)
-      if (oldInfo && oldInfo.type === ChannelType.Ship) {
-        const oldPlayer = getPlayerInfo(oldFleet, null, oldMember)
-        store.dispatch(leftShip(oldFleet, oldInfo, oldPlayer))
-      }
-    }
-    if (newMember && newMember.voiceChannel) {
-      const newInfo = getChannelInfo(newMember.voiceChannel)
-      const newFleet = getFleetInfo(newMember.voiceChannel.parent)
-      if (newInfo && newInfo.type === ChannelType.Ship) {
-        const newPlayer = getPlayerInfo(newFleet, newInfo, newMember)
-        store.dispatch(joinedShip(newFleet, newInfo, newPlayer))
-      }
-    }
-  })
+  client.on('error', err => console.error(err))
+  client.on('ready', () => console.log(`Logged in as ${client.user.tag}!`))
+  client.on('channelUpdate', (oldChannel, newChannel) => channelUpdate(store.dispatch, oldChannel, newChannel))
+  client.on('voiceStateUpdate', (oldMember, newMember) => voiceStateUpdate(store.dispatch, oldMember, newMember))
 
   await client.login(BotToken)
   await client.user.setPresence({
