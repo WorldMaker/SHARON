@@ -15,11 +15,11 @@ export interface ChangedShipAction {
   type: ActionType.ChangedShip
   fleet: FleetInfo
   oldShip: ShipInfo
-  newShip: ShipInfo
+  ship: ShipInfo
 }
 
-export function changedShip (fleet: FleetInfo, oldShip: ShipInfo, newShip: ShipInfo): ChangedShipAction {
-  return { type: ActionType.ChangedShip, fleet, oldShip, newShip }
+export function changedShip (fleet: FleetInfo, oldShip: ShipInfo, ship: ShipInfo): ChangedShipAction {
+  return { type: ActionType.ChangedShip, fleet, oldShip, ship }
 }
 
 export interface CheckShipAction {

@@ -14,7 +14,7 @@ function basicLogMessage (action: Action) {
     case ActionType.AddedShip:
       return [action.fleet.guildId, `**Added ship:** ${action.fleet.name} ${action.ship.name}`]
     case ActionType.ChangedShip:
-      return [action.fleet.guildId, `**Ship change:** ${action.fleet.name} ${action.oldShip.name} ➡ ${action.newShip.name}`]
+      return [action.fleet.guildId, `**Ship change:** ${action.fleet.name} ${action.oldShip.name} ➡ ${action.ship.name}`]
     case ActionType.CheckGuild:
       return [action.guildId, '**Reviewing all fleets**']
     case ActionType.CheckFleet:

@@ -7,7 +7,7 @@ import { StoreFile } from './epics/storage'
 import rootEpic from './epics'
 import channelUpdate from './events/channel-update'
 import voiceStateUpdate from './events/voice-state-update'
-import reducer from './reducer'
+import reducer from './reducers'
 import { BotToken } from './secrets.json'
 import { Store } from './models/store'
 
