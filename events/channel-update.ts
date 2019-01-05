@@ -1,7 +1,9 @@
 import * as Discord from 'discord.js'
 import { Dispatch } from 'redux'
 import { Action, closedFleet, newFleet, checkFleet, droppedShip, addedShip, changedShip } from '../actions'
-import { getChannelInfo, ChannelType, getFleetInfo } from '../model'
+import { getChannelInfo } from '../models/channel'
+import { getFleetInfo } from '../models/fleet'
+import { ChannelType } from '../models'
 
 export default function channelUpdate (dispatch: Dispatch<Action>, oldChannel: Discord.Channel, newChannel: Discord.Channel) {
   const oldInfo = getChannelInfo(oldChannel)

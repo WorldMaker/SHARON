@@ -3,8 +3,8 @@ import { Observable, from, merge } from 'rxjs'
 import { map, concatMap, filter } from 'rxjs/operators'
 import { CheckGuildAction } from '../../actions/guild'
 import { Action, ActionType, checkFleet, newFleet } from '../../actions'
-import { getChannelInfo, isFleet } from '../../model'
-import { Store } from '../../store'
+import { getChannelInfo, isFleet } from '../../models/channel'
+import { Store } from '../../models/store'
 import { DiscordDependency } from '../model'
 
 export default function checkGuildEpic (action: Observable<Action>, state: StateObservable<Store>, { client }: DiscordDependency) {

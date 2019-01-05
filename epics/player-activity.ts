@@ -3,7 +3,7 @@ import { Observable, merge, of, from, race } from 'rxjs'
 import { mergeMap, delay, takeUntil, last, filter } from 'rxjs/operators'
 import { JoinedShipAction, LeftShipAction, activePlayer, deactivePlayer } from '../actions/player'
 import { Action, ActionType } from '../actions'
-import { Store } from '../store'
+import { Store } from '../models/store'
 import { DiscordDependency } from './model'
 
 export const ActivityInterval = 5 /* m */ * 60 /* s */ * 1000 /* ms */

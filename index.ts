@@ -9,7 +9,7 @@ import channelUpdate from './events/channel-update'
 import voiceStateUpdate from './events/voice-state-update'
 import reducer from './reducer'
 import { BotToken } from './secrets.json'
-import { Store } from './store'
+import { Store } from './models/store'
 
 async function main () {
   const client = new Discord.Client()

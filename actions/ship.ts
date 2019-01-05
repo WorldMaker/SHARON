@@ -1,4 +1,4 @@
-import { FleetInfo, ShipInfo } from '../model'
+import { FleetInfo, ShipInfo } from '../models'
 import { ActionType } from './index'
 
 export interface AddedShipAction {

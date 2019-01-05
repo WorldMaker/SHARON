@@ -1,7 +1,7 @@
 import produce from 'immer'
 import { Action, ActionType } from './actions'
-import { ShipInfo, FleetInfo, PlayerInfo } from './model'
-import { Store } from './store'
+import { ShipInfo, FleetInfo, PlayerInfo } from './models'
+import { Store } from './models/store'
 
 const reducer = produce((draft, action: Action) => {
   const getFleet = (info: FleetInfo) => {

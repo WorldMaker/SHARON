@@ -1,4 +1,4 @@
-import { FleetInfo } from '../model'
+import { FleetInfo } from '../models'
 import { ActionType } from './index'
 
 export interface CheckFleetAction {

@@ -1,4 +1,4 @@
-import { FleetInfo, ShipInfo, PlayerInfo } from './model'
+import { FleetInfo, ShipInfo, PlayerInfo } from './index'
 
 export interface ActivityLog {
   readonly time: string

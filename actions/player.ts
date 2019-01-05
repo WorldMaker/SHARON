@@ -1,4 +1,4 @@
-import { FleetInfo, ShipInfo, PlayerInfo } from '../model'
+import { FleetInfo, ShipInfo, PlayerInfo } from '../models'
 import { ActionType } from './index'
 
 export interface ActivePlayerAction {

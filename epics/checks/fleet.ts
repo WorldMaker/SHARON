@@ -4,8 +4,8 @@ import { Observable, from, of } from 'rxjs'
 import { map, concatMap } from 'rxjs/operators'
 import { CheckFleetAction, closedFleet, newFleet } from '../../actions/fleet'
 import { Action, ActionType, checkFleet, addedShip, checkShip } from '../../actions'
-import { getChannelInfo, isFleet, isShip } from '../../model'
-import { Store } from '../../store'
+import { getChannelInfo, isFleet, isShip } from '../../models/channel'
+import { Store } from '../../models/store'
 import { DiscordDependency } from '../model'
 
 export default function checkFleetEpic (action: Observable<Action>, state: StateObservable<Store>, { client }: DiscordDependency) {

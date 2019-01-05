@@ -3,7 +3,7 @@ import { Observable, from } from 'rxjs'
 import { map, concatMap } from 'rxjs/operators'
 import { CheckAllAction } from '../../actions/guild'
 import { Action, checkGuild, ActionType } from '../../actions'
-import { Store } from '../../store'
+import { Store } from '../../models/store'
 import { DiscordDependency } from '../model'
 
 export default function checkAllEpic (action: Observable<Action>, _state: StateObservable<Store>, { client }: DiscordDependency) {
