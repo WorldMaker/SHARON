@@ -83,6 +83,9 @@ async function main () {
   })
 
   await client.login(BotToken)
+  await client.user.setPresence({
+    game: { name: 'ALL THE SHIPS', type: 'WATCHING' }
+  })
 
   epicMiddleware.run(rootEpic)
 
