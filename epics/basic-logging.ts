@@ -1,3 +1,4 @@
+import { distanceInWordsToNow, subMilliseconds } from 'date-fns'
 import { StateObservable } from 'redux-observable'
 import { Observable, from } from 'rxjs'
 import { map, concatMap, ignoreElements, groupBy, mergeMap, bufferTime } from 'rxjs/operators'
@@ -13,6 +14,8 @@ function basicLogMessage (action: Action) {
       return [action.fleet.guildId, `${action.player.name} is **active** on ${action.fleet.name} ${action.ship.name}`]
     case ActionType.AddedShip:
       return [action.fleet.guildId, `**Added ship:** ${action.fleet.name} ${action.ship.name}`]
+    case ActionType.AlarmPlayerActivity:
+      return [action.fleet.guildId, `🚨 ${action.player.name} has been active for ${distanceInWordsToNow(subMilliseconds(new Date(), action.duration))}`]
     case ActionType.ChangedShip:
       return [action.fleet.guildId, `**Ship change:** ${action.fleet.name} ${action.oldShip.name} ➡ ${action.ship.name}`]
     case ActionType.CheckGuild:

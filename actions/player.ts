@@ -12,6 +12,18 @@ export function activePlayer (fleet: FleetInfo, ship: ShipInfo, player: PlayerIn
   return { type: ActionType.ActivePlayer, fleet, ship, player }
 }
 
+export interface AlarmPlayerActivityAction {
+  type: ActionType.AlarmPlayerActivity
+  fleet: FleetInfo
+  ship: ShipInfo
+  player: PlayerInfo
+  duration: number
+}
+
+export function alarmPlayerActivity (fleet: FleetInfo, ship: ShipInfo, player: PlayerInfo, duration: number): AlarmPlayerActivityAction {
+  return { type: ActionType.AlarmPlayerActivity, fleet, ship, player, duration }
+}
+
 export interface DeactivePlayerAction {
   type: ActionType.DeactivePlayer
   fleet: FleetInfo

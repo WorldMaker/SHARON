@@ -5,6 +5,7 @@ import { getPlayer, getShip } from './model'
 
 export default function playerReducer (draft: Draft<Store>, action: Action) {
   if (action.type === ActionType.ActivePlayer
+    || action.type === ActionType.AlarmPlayerActivity
     || action.type === ActionType.DeactivePlayer
     || action.type === ActionType.JoinedShip
     || action.type === ActionType.LeftShip) {
@@ -24,6 +25,12 @@ export default function playerReducer (draft: Draft<Store>, action: Action) {
             isActive: true
           })
         }
+        break
+      case ActionType.AlarmPlayerActivity:
+        if (!player.alarms) {
+          player.alarms = {}
+        }
+        player.alarms.activityDuration = action.duration
         break
       case ActionType.DeactivePlayer:
         if (ship.leaving[action.player.id]) {
