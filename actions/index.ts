@@ -7,6 +7,9 @@ export enum ActionType {
   ActivePlayer = 'PLAYER_ACTIVE',
   AddedShip = 'SHIP_ADDED',
   AlarmPlayerActivity = 'PLAYER_ACTIVE_ALARM',
+  AlarmShipBaby = 'SHIP_BABY_ALARM',
+  AlarmShipLow = 'SHIP_LOW_ALARM',
+  AlarmShipVeryLow = 'SHIP_VERY_LOW_ALARM',
   ChangedShip = 'SHIP_CHANGED',
   CheckAll = 'CHECK',
   CheckGuild = 'GUILD_CHECK',
@@ -18,7 +21,9 @@ export enum ActionType {
   JoinedShip = 'SHIP_JOINED',
   LeftShip = 'SHIP_LEFT',
   NewFleet = 'FLEET_NEW',
-  Other = '__OTHER_ACTIONS__' // For default typing in case statements
+  Other = '__OTHER_ACTIONS__', // For default typing in case statements
+  UnalarmShipBaby = 'SHIP_BABY_REMOVE_ALARM',
+  UnalarmShipLow = 'SHIP_LOW_REMOVE_ALARM'
 }
 
 export interface OtherAction {

@@ -11,5 +11,9 @@ export interface ShipStore {
     readonly leaving: ShipPlayerStore
     readonly left: ShipPlayerStore
     readonly visiting: ShipPlayerStore
+    readonly alarms?: {
+      readonly babies?: number
+      readonly low?: number
+    }
   }
 }
