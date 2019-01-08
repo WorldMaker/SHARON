@@ -16,3 +16,6 @@ export interface CheckGuildAction {
 export function checkGuild (guildId: string): CheckGuildAction {
   return { type: ActionType.CheckGuild, guildId }
 }
+
+export type GuildAction = CheckAllAction
+  | CheckGuildAction

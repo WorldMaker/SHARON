@@ -41,3 +41,8 @@ export interface DroppedShipAction {
 export function droppedShip (fleet: FleetInfo, ship: ShipInfo): DroppedShipAction {
   return { type: ActionType.DroppedShip, fleet, ship }
 }
+
+export type ShipAction = AddedShipAction
+  | ChangedShipAction
+  | CheckShipAction
+  | DroppedShipAction

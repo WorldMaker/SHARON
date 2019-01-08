@@ -56,3 +56,9 @@ export interface LeftShipAction {
 export function leftShip (fleet: FleetInfo, ship: ShipInfo, player: PlayerInfo): LeftShipAction {
   return { type: ActionType.LeftShip, fleet, ship, player }
 }
+
+export type PlayerAction = ActivePlayerAction
+  | AlarmPlayerActivityAction
+  | DeactivePlayerAction
+  | JoinedShipAction
+  | LeftShipAction

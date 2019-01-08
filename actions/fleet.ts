@@ -27,3 +27,7 @@ export interface NewFleetAction {
 export function newFleet (fleet: FleetInfo): NewFleetAction {
   return { type: ActionType.NewFleet, fleet }
 }
+
+export type FleetAction = CheckFleetAction
+  | ClosedFleetAction
+  | NewFleetAction
