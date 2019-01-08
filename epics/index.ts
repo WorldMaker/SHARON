@@ -7,6 +7,7 @@ import checkGuildEpic from './checks/guild'
 import checkFleetEpic from './checks/fleet'
 import checkShipEpic from './checks/ship'
 import checkSometimesEpic from './checks/sometimes'
+import reportFleetStatusEpic from './fleet-status'
 import playerActivityEpic from './player-activity'
 import storageEpic from './storage'
 
@@ -19,6 +20,7 @@ const rootEpic = combineEpics(
   checkSometimesEpic,
   playerActivityEpic,
   playerActivityAlarmEpic,
+  reportFleetStatusEpic,
   shipCountAlarmsEpic,
   storageEpic
 )

@@ -7,14 +7,16 @@ export interface ActivityLog {
   readonly isActive: boolean
 }
 
-export interface PlayerStore {
-  readonly [id: string]: {
-    readonly info: PlayerInfo
-    readonly activity?: ReadonlyArray<ActivityLog>
-    readonly alarms?: {
-      activityDuration?: number
-    }
+export interface Player {
+  readonly info: PlayerInfo
+  readonly activity?: ReadonlyArray<ActivityLog>
+  readonly alarms?: {
+    activityDuration?: number
   }
+}
+
+export interface PlayerStore {
+  readonly [id: string]: Player
 }
 
 interface ActivityDurationAccumulator {
