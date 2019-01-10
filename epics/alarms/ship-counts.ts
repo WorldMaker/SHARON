@@ -31,7 +31,7 @@ export default function shipCountAlarmsEpic (action: Observable<Action>, state: 
         alarms.push(alarmShipLow(action.fleet, action.ship, activePlayers.length))
       }
       const veryLowSpots = shipType.veryLowSpots || DefaultVeryLowSpots
-      if (activePlayers.length <= veryLowSpots && !(ship.alarms && ship.alarms.low && ship.alarms.low <= veryLowSpots)) {
+      if (activePlayers.length <= veryLowSpots) {
         alarms.push(alarmShipVeryLow(action.fleet, action.ship, activePlayers.length))
       }
       if (ship.alarms && ship.alarms.low && activePlayers.length > lowSpots) {

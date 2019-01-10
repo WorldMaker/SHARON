@@ -1,4 +1,5 @@
 import { combineEpics } from 'redux-observable'
+import reportFleetAlarmsEpic from './alarms/fleet-report'
 import playerActivityAlarmEpic from './alarms/player-activity'
 import shipCountAlarmsEpic from './alarms/ship-counts'
 import basicLoggingEpic from './basic-logging'
@@ -20,6 +21,7 @@ const rootEpic = combineEpics(
   checkSometimesEpic,
   playerActivityEpic,
   playerActivityAlarmEpic,
+  reportFleetAlarmsEpic,
   reportFleetStatusEpic,
   shipCountAlarmsEpic,
   storageEpic
