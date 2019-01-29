@@ -7,7 +7,7 @@
     "build": "tsc -p .",
     "prestart": "npm run build",
     "start": "node index.js",
-    "test": "tsc -p ."
+    "test": "npx jest"
   },
   "author": "Max Battcher <me@worldmaker.net>",
   "license": "MIT",
@@ -21,7 +21,10 @@
     "rxjs": "^6.3.3"
   },
   "devDependencies": {
+    "@types/jest": "^23.3.13",
     "@types/node": "^10.12.12",
+    "jest": "^24.0.0",
+    "ts-jest": "^23.10.5",
     "tslint": "^5.11.0",
     "tslint-config-standard": "^8.0.1",
     "typescript": "^3.2.1",
