@@ -1,7 +1,7 @@
 import { VoiceChannel } from 'discord.js'
 import { ChannelType, nlp } from './index'
 
-export type ShipType = 'galleon' | 'brig' | 'brigantine' | 'sloop' | 'ship'
+export type ShipType = 'gal' | 'galleon' | 'brig' | 'brigantine' | 'sloop' | 'ship'
 
 export interface ShipInfo {
   type: ChannelType.Ship
@@ -25,6 +25,13 @@ interface ShipTypeLookup {
 }
 
 export const shipTypes: ShipTypeLookup = Object.freeze({
+  gal: Object.freeze({
+    normative: 'galleon',
+    total: 4,
+    babySpots: 3,
+    lowSpots: 2,
+    veryLowSpots: 1
+  }),
   galleon: Object.freeze({
     total: 4,
     babySpots: 3,
@@ -32,6 +39,7 @@ export const shipTypes: ShipTypeLookup = Object.freeze({
     veryLowSpots: 1
   }),
   brig: Object.freeze({
+    normative: 'brigantine',
     total: 3,
     babySpots: 3,
     lowSpots: 1,
