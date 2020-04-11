@@ -66,7 +66,7 @@ export function getShipInfo (ship: VoiceChannel, doc: any = null): ShipInfo {
   const values = doc.values()
   return {
     type: ChannelType.Ship,
-    fleetId: ship.parent.id,
+    fleetId: ship.parent!.id,
     guildId: ship.guild.id,
     id: ship.id,
     name: ship.name,

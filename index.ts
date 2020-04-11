@@ -20,7 +20,7 @@ async function main () {
     }
   })
 
-  let baseState: Store | undefined = undefined
+  let baseState: any /* Store | undefined */ = undefined
   try {
     const storeFile = await fs.readFile(StoreFile, { encoding: 'utf-8' })
     if (typeof storeFile === 'string') {
