@@ -1,5 +1,5 @@
-import { FleetInfo, ShipInfo } from '../models'
-import { ActionType } from './index'
+import { FleetInfo, ShipInfo } from '../models/index.ts'
+import { ActionType } from './index.ts'
 
 export interface AddedShipAction {
   type: ActionType.AddedShip,

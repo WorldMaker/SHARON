@@ -1,11 +1,11 @@
 import { StateObservable, ofType } from 'redux-observable'
 import { Observable, from } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
-import { alarmPlayerActivity } from '../../actions/player'
-import { CheckShipAction } from '../../actions/ship'
-import { Action, ActionType } from '../../actions'
-import { getPlayerActivityDuration } from '../../models/store/player'
-import { Store } from '../../models/store'
+import { alarmPlayerActivity } from '../../actions/player.ts'
+import { CheckShipAction } from '../../actions/ship.ts'
+import { Action, ActionType } from '../../actions/index.ts'
+import { getPlayerActivityDuration } from '../../models/store/player.ts'
+import { Store } from '../../models/store/index.ts'
 
 export const PlayerActivityAlarmInterval = 6 /* h */ * 60 /* min */ * 60 /* s */ * 1000 /* ms */
 

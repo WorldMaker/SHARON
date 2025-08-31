@@ -1,7 +1,7 @@
-import { FleetAction, checkFleet, closedFleet, newFleet } from './fleet'
-import { GuildAction, checkAll, checkGuild } from './guild'
-import { PlayerAction, activePlayer, deactivePlayer, alarmPlayerActivity, leftShip, joinedShip } from './player'
-import { ShipAction, addedShip, changedShip, checkShip, droppedShip } from './ship'
+import { FleetAction, checkFleet, closedFleet, newFleet } from './fleet.ts'
+import { GuildAction, checkAll, checkGuild } from './guild.ts'
+import { PlayerAction, activePlayer, deactivePlayer, alarmPlayerActivity, leftShip, joinedShip } from './player.ts'
+import { ShipAction, addedShip, changedShip, checkShip, droppedShip } from './ship.ts'
 
 export enum ActionType {
   ActivePlayer = 'PLAYER_ACTIVE',

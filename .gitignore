@@ -2,6 +2,7 @@ node_modules
 **/*.js
 **/*.js.map
 
+.env
 secrets.json
 store.json
 

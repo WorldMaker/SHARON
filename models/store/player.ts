@@ -1,5 +1,5 @@
 import { differenceInMilliseconds } from 'date-fns'
-import { PlayerInfo } from '../player'
+import { PlayerInfo } from '../player.ts'
 
 export interface ActivityLog {
   readonly time: string

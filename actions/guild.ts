@@ -1,4 +1,4 @@
-import { ActionType } from './index'
+import { ActionType } from './index.ts'
 
 export interface CheckAllAction {
   type: ActionType.CheckAll

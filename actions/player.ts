@@ -1,5 +1,5 @@
-import { FleetInfo, ShipInfo, PlayerInfo } from '../models'
-import { ActionType } from './index'
+import { FleetInfo, ShipInfo, PlayerInfo } from '../models/index.ts'
+import { ActionType } from './index.ts'
 
 export interface ActivePlayerAction {
   type: ActionType.ActivePlayer

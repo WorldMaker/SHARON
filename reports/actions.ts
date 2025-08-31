@@ -1,5 +1,5 @@
 import { distanceInWordsToNow, subMilliseconds } from 'date-fns'
-import { Action, ActionType } from '../actions'
+import { Action, ActionType } from '../actions/index.ts'
 
 export default function actionReport (action: Action) {
   switch (action.type) {

@@ -2,11 +2,11 @@ import { CategoryChannel } from 'discord.js'
 import { StateObservable, ofType } from 'redux-observable'
 import { Observable, from, of } from 'rxjs'
 import { map, concatMap } from 'rxjs/operators'
-import { CheckFleetAction, closedFleet, newFleet } from '../../actions/fleet'
-import { Action, ActionType, checkFleet, addedShip, checkShip } from '../../actions'
-import { getChannelInfo, isFleet, isShip } from '../../models/channel'
-import { Store } from '../../models/store'
-import { DiscordDependency } from '../model'
+import { CheckFleetAction, closedFleet, newFleet } from '../../actions/fleet.ts'
+import { Action, ActionType, checkFleet, addedShip, checkShip } from '../../actions/index.ts'
+import { getChannelInfo, isFleet, isShip } from '../../models/channel.ts'
+import { Store } from '../../models/store/index.ts'
+import { DiscordDependency } from '../model.ts'
 
 export default function checkFleetEpic (action: Observable<Action>, state: StateObservable<Store>, { client }: DiscordDependency) {
   return action.pipe(

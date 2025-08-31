@@ -1,5 +1,5 @@
-import { FleetInfo } from '../models'
-import { ActionType } from './index'
+import { FleetInfo } from '../models/index.ts'
+import { ActionType } from './index.ts'
 
 export interface CheckFleetAction {
   type: ActionType.CheckFleet

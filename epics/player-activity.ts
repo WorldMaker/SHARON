@@ -1,10 +1,10 @@
 import { StateObservable, ofType } from 'redux-observable'
 import { Observable, merge, of, from, race } from 'rxjs'
 import { mergeMap, delay, takeUntil, last, filter } from 'rxjs/operators'
-import { JoinedShipAction, LeftShipAction, activePlayer, deactivePlayer } from '../actions/player'
-import { Action, ActionType } from '../actions'
-import { Store } from '../models/store'
-import { DiscordDependency } from './model'
+import { JoinedShipAction, LeftShipAction, activePlayer, deactivePlayer } from '../actions/player.ts'
+import { Action, ActionType } from '../actions/index.ts'
+import { Store } from '../models/store/index.ts'
+import { DiscordDependency } from './model.ts'
 
 export const ActivityInterval = 5 /* m */ * 60 /* s */ * 1000 /* ms */
 

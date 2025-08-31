@@ -1,4 +1,4 @@
-import { FleetStore } from './fleet'
+import { FleetStore } from './fleet.ts'
 
 export interface GuildStore {
   readonly [guildId: string]: {

@@ -1,5 +1,5 @@
-import { Fleet } from '../models/store/fleet'
-import shipStatus from './ship-status'
+import { Fleet } from '../models/store/fleet.ts'
+import shipStatus from './ship-status.ts'
 
 export default function fleetStatus (fleet: Fleet) {
   return [...Object.keys(fleet.ships)]

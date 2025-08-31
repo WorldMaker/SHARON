@@ -1,11 +1,11 @@
 import { StateObservable, ofType } from 'redux-observable'
 import { Observable, from } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
-import { ActivePlayerAction, DeactivePlayerAction } from '../../actions/player'
-import { CheckShipAction, alarmShipBaby, unalarmShipBaby, alarmShipLow, alarmShipVeryLow, unalarmShipLow } from '../../actions/ship'
-import { Action, ActionType } from '../../actions'
-import { shipTypes } from '../../models/ship'
-import { Store } from '../../models/store'
+import { ActivePlayerAction, DeactivePlayerAction } from '../../actions/player.ts'
+import { CheckShipAction, alarmShipBaby, unalarmShipBaby, alarmShipLow, alarmShipVeryLow, unalarmShipLow } from '../../actions/ship.ts'
+import { Action, ActionType } from '../../actions/index.ts'
+import { shipTypes } from '../../models/ship.ts'
+import { Store } from '../../models/store/index.ts'
 
 const DefaultBabySpots = Infinity // "don't worry about it"
 const DefaultLowSpots = -1

@@ -1,7 +1,7 @@
-import { PlayerStore } from '../models/store/player'
-import { Ship } from '../models/store/ship'
-import { shipTypes } from '../models/ship'
-import playerStatus from './player-status'
+import { PlayerStore } from '../models/store/player.ts'
+import { Ship } from '../models/store/ship.ts'
+import { shipTypes } from '../models/ship.ts'
+import playerStatus from './player-status.ts'
 
 export default function shipStatus (ship: Ship, players: PlayerStore) {
   const alarms = ship.alarms || {}

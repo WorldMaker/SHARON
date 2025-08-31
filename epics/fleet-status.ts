@@ -3,11 +3,11 @@ import { Observable, from } from 'rxjs'
 import { concatMap, debounceTime, groupBy, ignoreElements, mergeMap } from 'rxjs/operators'
 import { AlarmPlayerActivityAction, ActivePlayerAction, DeactivePlayerAction, JoinedShipAction, LeftShipAction } from '../actions/player'
 import { AlarmShipBabyAction, AlarmShipLowAction, AlarmShipVeryLowAction, UnalarmShipBabyAction, UnalarmShipLowAction } from '../actions/ship'
-import { CheckFleetAction } from '../actions/fleet'
-import { Action, ActionType } from '../actions'
-import { Store } from '../models/store'
-import fleetStatus from '../reports/fleet-status'
-import { DiscordDependency, sendFleetStatus } from './model'
+import { CheckFleetAction } from '../actions/fleet.ts'
+import { Action, ActionType } from '../actions/index.ts'
+import { Store } from '../models/store/index.ts'
+import fleetStatus from '../reports/fleet-status.ts'
+import { DiscordDependency, sendFleetStatus } from './model.ts'
 
 type ReportActions = CheckFleetAction
   | AlarmPlayerActivityAction

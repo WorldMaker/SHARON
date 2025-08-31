@@ -1,12 +1,12 @@
 import { StateObservable, ofType } from 'redux-observable'
 import { Observable, from } from 'rxjs'
 import { concatMap, groupBy, ignoreElements, mergeMap } from 'rxjs/operators'
-import { AlarmPlayerActivityAction } from '../../actions/player'
-import { AlarmShipBabyAction, AlarmShipLowAction, AlarmShipVeryLowAction } from '../../actions/ship'
-import { Action, ActionType } from '../../actions'
-import { Store } from '../../models/store'
-import actionReport from '../../reports/actions'
-import { DiscordDependency, sendFleetStatus } from '../model'
+import { AlarmPlayerActivityAction } from '../../actions/player.ts'
+import { AlarmShipBabyAction, AlarmShipLowAction, AlarmShipVeryLowAction } from '../../actions/ship.ts'
+import { Action, ActionType } from '../../actions/index.ts'
+import { Store } from '../../models/store/index.ts'
+import actionReport from '../../reports/actions.ts'
+import { DiscordDependency, sendFleetStatus } from '../model.ts'
 
 type ReportActions = AlarmPlayerActivityAction
   | AlarmShipBabyAction

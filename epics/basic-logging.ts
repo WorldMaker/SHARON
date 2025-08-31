@@ -1,10 +1,10 @@
 import { StateObservable } from 'redux-observable'
 import { Observable, from } from 'rxjs'
 import { map, concatMap, ignoreElements, groupBy, mergeMap, bufferTime } from 'rxjs/operators'
-import { Action } from '../actions'
-import { Store } from '../models/store'
-import actionReport from '../reports/actions'
-import { DiscordDependency, log } from './model'
+import { Action } from '../actions/index.ts'
+import { Store } from '../models/store/index.ts'
+import actionReport from '../reports/actions.ts'
+import { DiscordDependency, log } from './model.ts'
 
 export const BasicLogInterval = 2 /* s */ * 1000 /* ms */
 

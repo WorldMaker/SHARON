@@ -1,7 +1,7 @@
 import { Draft } from 'immer'
-import { Action, ActionType } from '../actions'
-import { Store } from '../models/store'
-import { getFleet, getShip } from './model'
+import { Action, ActionType } from '../actions/index.ts'
+import { Store } from '../models/store/index.ts'
+import { getFleet, getShip } from './model.ts'
 
 export default function shipReducer (draft: Draft<Store>, action: Action) {
   if (action.type === ActionType.AddedShip || action.type === ActionType.DroppedShip) {

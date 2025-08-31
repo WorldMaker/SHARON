@@ -1,7 +1,6 @@
 import { Draft } from 'immer'
-import { Store } from '../models/store'
-import { FleetInfo, ShipInfo, PlayerInfo } from '../models'
-import { FleetStore } from '../models/store/fleet'
+import { Store } from '../models/store/index.ts'
+import { FleetInfo, ShipInfo, PlayerInfo } from '../models/index.ts'
 
 export function getFleet (draft: Draft<Store>, info: FleetInfo) {
   let guild = draft.guilds[info.guildId]

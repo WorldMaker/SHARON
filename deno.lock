@@ -5,7 +5,12 @@
     "jsr:@std/expect@^1.0.17": "1.0.17",
     "jsr:@std/internal@^1.0.10": "1.0.10",
     "npm:compromise@^14.14.4": "14.14.4",
-    "npm:discord.js@^14.22.1": "14.22.1"
+    "npm:date-fns@^4.1.0": "4.1.0",
+    "npm:discord.js@^14.22.1": "14.22.1",
+    "npm:immer@^10.1.1": "10.1.1",
+    "npm:redux-observable@^3.0.0-rc.2": "3.0.0-rc.2_redux@5.0.1_rxjs@7.8.2",
+    "npm:redux@^5.0.1": "5.0.1",
+    "npm:rxjs@^7.8.2": "7.8.2"
   },
   "jsr": {
     "@std/assert@1.0.14": {
@@ -117,6 +122,9 @@
         "suffix-thumb"
       ]
     },
+    "date-fns@4.1.0": {
+      "integrity": "sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg=="
+    },
     "discord-api-types@0.38.22": {
       "integrity": "sha512-2gnYrgXN3yTlv2cKBISI/A8btZwsSZLwKpIQXeI1cS8a7W7wP3sFVQOm3mPuuinTD8jJCKGPGNH399zE7Un1kA=="
     },
@@ -147,6 +155,9 @@
     "grad-school@0.0.5": {
       "integrity": "sha512-rXunEHF9M9EkMydTBux7+IryYXEZinRk6g8OBOGDBzo/qWJjhTxy86i5q7lQYpCLHN8Sqv1XX3OIOc7ka2gtvQ=="
     },
+    "immer@10.1.1": {
+      "integrity": "sha512-s2MPrmjovJcoMaHtx6K11Ra7oD05NT97w1IC5zpMkT6Atjr7H8LjaDd81iIxUYpMKSRRNMJE703M1Fhr/TctHw=="
+    },
     "lodash.snakecase@4.1.1": {
       "integrity": "sha512-QZ1d4xoBHYUeuouhEq3lk3Uq7ldgyFXGBhg04+oRLnIz8o9T65Eh+8YdroUwn846zchkA9yDsDl5CVVaV2nqYw=="
     },
@@ -155,6 +166,22 @@
     },
     "magic-bytes.js@1.12.1": {
       "integrity": "sha512-ThQLOhN86ZkJ7qemtVRGYM+gRgR8GEXNli9H/PMvpnZsE44Xfh3wx9kGJaldg314v85m+bFW6WBMaVHJc/c3zA=="
+    },
+    "redux-observable@3.0.0-rc.2_redux@5.0.1_rxjs@7.8.2": {
+      "integrity": "sha512-gG/pWIKgSrcTyyavm2so5tc7tuyCQ47p3VdCAG6wt+CV0WGhDr50cMQHLcYKxFZSGgTm19a8ZmyfJGndmGDpYg==",
+      "dependencies": [
+        "redux",
+        "rxjs"
+      ]
+    },
+    "redux@5.0.1": {
+      "integrity": "sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w=="
+    },
+    "rxjs@7.8.2": {
+      "integrity": "sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==",
+      "dependencies": [
+        "tslib"
+      ]
     },
     "suffix-thumb@5.0.2": {
       "integrity": "sha512-I5PWXAFKx3FYnI9a+dQMWNqTxoRt6vdBdb0O+BJ1sxXCWtSoQCusc13E58f+9p4MYx/qCnEMkD5jac6K2j3dgA=="
@@ -179,7 +206,12 @@
     "dependencies": [
       "jsr:@std/expect@^1.0.17",
       "npm:compromise@^14.14.4",
-      "npm:discord.js@^14.22.1"
+      "npm:date-fns@^4.1.0",
+      "npm:discord.js@^14.22.1",
+      "npm:immer@^10.1.1",
+      "npm:redux-observable@^3.0.0-rc.2",
+      "npm:redux@^5.0.1",
+      "npm:rxjs@^7.8.2"
     ]
   }
 }

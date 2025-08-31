@@ -1,8 +1,8 @@
 import { CategoryChannel, Channel, GuildChannel, VoiceChannel } from 'discord.js'
-import { ChannelType } from './channel-type'
-import { FleetInfo, ShipInfo, nlp } from './index'
-import { getFleetInfo } from './fleet'
-import { getShipInfo } from './ship'
+import { ChannelType } from './channel-type.ts'
+import { FleetInfo, ShipInfo, nlp } from './index.ts'
+import { getFleetInfo } from './fleet.ts'
+import { getShipInfo } from './ship.ts'
 
 export function getChannelInfo (channel: Channel): FleetInfo | ShipInfo | null {
   if (channel instanceof GuildChannel) {

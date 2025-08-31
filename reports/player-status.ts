@@ -1,5 +1,5 @@
 import { distanceInWordsToNow, subMilliseconds } from 'date-fns'
-import { Player } from '../models/store/player'
+import { Player } from '../models/store/player.ts'
 
 export default function playerStatus (player: Player) {
   const alarms = player.alarms || {}

@@ -1,9 +1,9 @@
 import produce from 'immer'
-import { Action, ActionType } from '../actions'
-import { Store } from '../models/store'
-import fleetReducer from './fleet'
-import playerReducer from './player'
-import shipReducer from './ship'
+import { Action } from '../actions/index.ts'
+import { Store } from '../models/store/index.ts'
+import fleetReducer from './fleet.ts'
+import playerReducer from './player.ts'
+import shipReducer from './ship.ts'
 
 const reducer = produce((draft, action: Action) => {
   fleetReducer(draft, action)
