@@ -1,5 +1,5 @@
 import { VoiceChannel } from 'discord.js'
-import { ChannelType, nlp } from './index'
+import { ChannelType, nlp } from './index.ts'
 
 export type ShipType = 'gal' | 'galleon' | 'brig' | 'brigantine' | 'sloop' | 'ship'
 

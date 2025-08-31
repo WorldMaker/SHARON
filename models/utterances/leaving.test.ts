@@ -1,6 +1,7 @@
-import examineLeaving from './leaving'
+import { expect } from '@std/expect'
+import examineLeaving from './leaving.ts'
 
-test('leaving corpus', () => {
+Deno.test('leaving corpus', () => {
   const test1 = examineLeaving('leaving')
   expect(test1).toBeTruthy()
   expect(test1 && test1.personal).toBeFalsy()

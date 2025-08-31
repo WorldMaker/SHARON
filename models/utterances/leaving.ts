@@ -1,4 +1,4 @@
-import { nlp } from '../index'
+import { nlp } from '../index.ts'
 
 export enum LeavingType {
   Now = 'now',

@@ -1,12 +1,12 @@
 import { GuildMember } from 'discord.js'
-import { FleetInfo, ShipInfo } from './index'
+import { FleetInfo, ShipInfo } from './index.ts'
 
 export interface PlayerInfo {
   fleetId: string
   guildId: string
   shipId: string | null
   id: string
-  hoistRoleName: string | null
+  highestRoleName: string | null
   name: string
   username: string
 }
@@ -17,7 +17,7 @@ export function getPlayerInfo (fleet: FleetInfo, ship: ShipInfo | null, player: 
     guildId: fleet.guildId,
     shipId: ship && ship.id,
     id: player.id,
-    hoistRoleName: player.hoistRole ? player.hoistRole.name : null,
+    highestRoleName: player.roles.highest.name ? player.roles.highest.name : null,
     name: player.displayName,
     username: player.user.username
   }

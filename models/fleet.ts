@@ -1,5 +1,5 @@
 import { CategoryChannel } from 'discord.js'
-import { ChannelType, nlp } from './index'
+import { ChannelType, nlp } from './index.ts'
 
 export interface FleetInfo {
   type: ChannelType.Fleet
