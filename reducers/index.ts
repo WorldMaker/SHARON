@@ -10,7 +10,7 @@ const reducer = produce((draft, action: Action) => {
   shipReducer(draft, action)
   playerReducer(draft, action)
 }, {
-  guilds: {}
+  guilds: {},
 } as Store)
 
 export default reducer

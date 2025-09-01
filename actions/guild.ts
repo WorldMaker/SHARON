@@ -4,7 +4,7 @@ export interface CheckAllAction {
   type: ActionType.CheckAll
 }
 
-export function checkAll (): CheckAllAction {
+export function checkAll(): CheckAllAction {
   return { type: ActionType.CheckAll }
 }
 
@@ -13,9 +13,10 @@ export interface CheckGuildAction {
   guildId: string
 }
 
-export function checkGuild (guildId: string): CheckGuildAction {
+export function checkGuild(guildId: string): CheckGuildAction {
   return { type: ActionType.CheckGuild, guildId }
 }
 
-export type GuildAction = CheckAllAction
+export type GuildAction =
+  | CheckAllAction
   | CheckGuildAction

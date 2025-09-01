@@ -7,10 +7,4 @@ import { ShipInfo } from './ship.ts'
 
 nlp.plugin(nlpPlugin)
 
-export {
-  ChannelType,
-  type FleetInfo,
-  type PlayerInfo,
-  type ShipInfo,
-  nlp
-}
+export { ChannelType, type FleetInfo, nlp, type PlayerInfo, type ShipInfo }

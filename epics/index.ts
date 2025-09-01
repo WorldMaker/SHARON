@@ -24,7 +24,7 @@ const rootEpic = combineEpics(
   reportFleetAlarmsEpic,
   reportFleetStatusEpic,
   shipCountAlarmsEpic,
-  storageEpic
+  storageEpic,
 )
 
 export default rootEpic

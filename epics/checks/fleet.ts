@@ -1,17 +1,27 @@
 import { CategoryChannel } from 'discord.js'
-import { StateObservable, ofType } from 'redux-observable'
-import { Observable, from, of } from 'rxjs'
-import { map, concatMap } from 'rxjs/operators'
+import { ofType, StateObservable } from 'redux-observable'
+import { from, Observable, of } from 'rxjs'
+import { concatMap, map } from 'rxjs/operators'
 import { closedFleet, newFleet } from '../../actions/fleet.ts'
-import { Action, ActionType, checkFleet, addedShip, checkShip } from '../../actions/index.ts'
+import {
+  Action,
+  ActionType,
+  addedShip,
+  checkFleet,
+  checkShip,
+} from '../../actions/index.ts'
 import { getChannelInfo, isFleet, isShip } from '../../models/channel.ts'
 import { Store } from '../../models/store/index.ts'
 import { DiscordDependency } from '../model.ts'
 
-export default function checkFleetEpic (action: Observable<Action>, state: StateObservable<Store>, { client }: DiscordDependency) {
+export default function checkFleetEpic(
+  action: Observable<Action>,
+  state: StateObservable<Store>,
+  { client }: DiscordDependency,
+) {
   return action.pipe(
     ofType(ActionType.CheckFleet),
-    map(action => {
+    map((action) => {
       const channel = client.channels.get(action.fleet.id)
       return { action, channel, info: channel ? getChannelInfo(channel) : null }
     }),
@@ -23,12 +33,13 @@ export default function checkFleetEpic (action: Observable<Action>, state: State
         return from([
           closedFleet(action.fleet),
           newFleet(info),
-          checkFleet(info)
+          checkFleet(info),
         ])
       }
-      const fleet = state.value.guilds[action.fleet.guildId].fleets[action.fleet.id]
+      const fleet =
+        state.value.guilds[action.fleet.guildId].fleets[action.fleet.id]
       const checkShips = Object.keys(fleet.ships)
-        .map(key => checkShip(info, fleet.ships[key].info) as Action)
+        .map((key) => checkShip(info, fleet.ships[key].info) as Action)
       for (const subChannel of (channel as CategoryChannel).children.values()) {
         const subInfo = getChannelInfo(subChannel)
         if (subInfo && isShip(subInfo) && !fleet.ships[subInfo.id]) {
@@ -36,6 +47,6 @@ export default function checkFleetEpic (action: Observable<Action>, state: State
         }
       }
       return from(checkShips)
-    })
+    }),
   )
 }

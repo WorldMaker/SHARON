@@ -1,12 +1,16 @@
 import * as Discord from 'discord.js'
 import { Dispatch } from 'redux'
-import { Action, leftShip, joinedShip } from '../actions/index.ts'
+import { Action, joinedShip, leftShip } from '../actions/index.ts'
 import { getChannelInfo } from '../models/channel.ts'
 import { getFleetInfo } from '../models/fleet.ts'
 import { getPlayerInfo } from '../models/player.ts'
 import { ChannelType } from '../models/index.ts'
 
-export default function voiceStateUpdate (dispatch: Dispatch<Action>, oldMember: Discord.GuildMember, newMember: Discord.GuildMember) {
+export default function voiceStateUpdate(
+  dispatch: Dispatch<Action>,
+  oldMember: Discord.GuildMember,
+  newMember: Discord.GuildMember,
+) {
   if (oldMember && oldMember.voiceChannel) {
     const oldInfo = getChannelInfo(oldMember.voiceChannel)
     const oldFleet = getFleetInfo(oldMember.voiceChannel.parent!)

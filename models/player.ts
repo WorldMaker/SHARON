@@ -11,14 +11,20 @@ export interface PlayerInfo {
   username: string
 }
 
-export function getPlayerInfo (fleet: FleetInfo, ship: ShipInfo | null, player: GuildMember): PlayerInfo {
+export function getPlayerInfo(
+  fleet: FleetInfo,
+  ship: ShipInfo | null,
+  player: GuildMember,
+): PlayerInfo {
   return {
     fleetId: fleet.id,
     guildId: fleet.guildId,
     shipId: ship && ship.id,
     id: player.id,
-    highestRoleName: player.roles.highest.name ? player.roles.highest.name : null,
+    highestRoleName: player.roles.highest.name
+      ? player.roles.highest.name
+      : null,
     name: player.displayName,
-    username: player.user.username
+    username: player.user.username,
   }
 }

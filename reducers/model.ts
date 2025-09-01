@@ -1,12 +1,12 @@
 import { Draft } from 'immer'
 import { Store } from '../models/store/index.ts'
-import { FleetInfo, ShipInfo, PlayerInfo } from '../models/index.ts'
+import { FleetInfo, PlayerInfo, ShipInfo } from '../models/index.ts'
 
-export function getFleet (draft: Draft<Store>, info: FleetInfo) {
+export function getFleet(draft: Draft<Store>, info: FleetInfo) {
   let guild = draft.guilds[info.guildId]
   if (!guild) {
     guild = draft.guilds[info.guildId] = {
-      fleets: {}
+      fleets: {},
     }
   }
   let fleet = guild.fleets[info.id]
@@ -15,13 +15,17 @@ export function getFleet (draft: Draft<Store>, info: FleetInfo) {
       active: true,
       info,
       ships: {},
-      players: {}
+      players: {},
     }
   }
   return fleet
 }
 
-export function getShip (draft: Draft<Store>, fleetInfo: FleetInfo, info: ShipInfo) {
+export function getShip(
+  draft: Draft<Store>,
+  fleetInfo: FleetInfo,
+  info: ShipInfo,
+) {
   const fleet = getFleet(draft, fleetInfo)
   let ship = fleet.ships[info.id]
   if (!ship) {
@@ -30,19 +34,23 @@ export function getShip (draft: Draft<Store>, fleetInfo: FleetInfo, info: ShipIn
       info,
       leaving: {},
       left: {},
-      visiting: {}
+      visiting: {},
     }
   }
   return ship
 }
 
-export function getPlayer (draft: Draft<Store>, fleetInfo: FleetInfo, info: PlayerInfo) {
+export function getPlayer(
+  draft: Draft<Store>,
+  fleetInfo: FleetInfo,
+  info: PlayerInfo,
+) {
   const fleet = getFleet(draft, fleetInfo)
   let player = fleet.players[info.id]
   if (!player) {
     player = fleet.players[info.id] = {
       info,
-      activity: []
+      activity: [],
     }
   }
   return player

@@ -1,4 +1,4 @@
 export enum ChannelType {
   Fleet = 'fleet',
-  Ship = 'ship'
+  Ship = 'ship',
 }

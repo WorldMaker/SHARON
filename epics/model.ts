@@ -8,7 +8,11 @@ export interface DiscordDependency {
   client: Discord.Client
 }
 
-export async function log (client: Discord.Client, guildId: string | null, message: string | null) {
+export async function log(
+  client: Discord.Client,
+  guildId: string | null,
+  message: string | null,
+) {
   if (!message) {
     return
   }
@@ -21,7 +25,7 @@ export async function log (client: Discord.Client, guildId: string | null, messa
   }
   const guild = client.guilds.get(guildId)
   if (guild && guild.available) {
-    const logChannel = guild.channels.find(c => c.name === 'sharon-log')
+    const logChannel = guild.channels.find((c) => c.name === 'sharon-log')
     if (logChannel && logChannel instanceof Discord.TextChannel) {
       await logChannel.send(message)
     } else {
@@ -32,7 +36,12 @@ export async function log (client: Discord.Client, guildId: string | null, messa
   }
 }
 
-export async function sendFleetStatus (client: Discord.Client, guildId: string, fleetId: string, message: string | null) {
+export async function sendFleetStatus(
+  client: Discord.Client,
+  guildId: string,
+  fleetId: string,
+  message: string | null,
+) {
   if (!message) {
     return
   }
@@ -40,9 +49,13 @@ export async function sendFleetStatus (client: Discord.Client, guildId: string, 
   if (guild && guild.available) {
     const fleet = guild.channels.get(fleetId)
     if (fleet && fleet instanceof Discord.CategoryChannel) {
-      const statusChannel = fleet.children.find(c => c.name === FleetStatusChannel)
+      const statusChannel = fleet.children.find((c) =>
+        c.name === FleetStatusChannel
+      )
       if (statusChannel && statusChannel instanceof Discord.TextChannel) {
-        await statusChannel.send(ShoutMode ? message.toLocaleUpperCase() : message)
+        await statusChannel.send(
+          ShoutMode ? message.toLocaleUpperCase() : message,
+        )
       }
     }
   }

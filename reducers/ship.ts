@@ -3,8 +3,11 @@ import { Action, ActionType } from '../actions/index.ts'
 import { Store } from '../models/store/index.ts'
 import { getFleet, getShip } from './model.ts'
 
-export default function shipReducer (draft: Draft<Store>, action: Action) {
-  if (action.type === ActionType.AddedShip || action.type === ActionType.DroppedShip) {
+export default function shipReducer(draft: Draft<Store>, action: Action) {
+  if (
+    action.type === ActionType.AddedShip ||
+    action.type === ActionType.DroppedShip
+  ) {
     const fleet = getFleet(draft, action.fleet)
     switch (action.type) {
       case ActionType.AddedShip:
@@ -13,7 +16,7 @@ export default function shipReducer (draft: Draft<Store>, action: Action) {
           info: action.ship,
           leaving: {},
           left: {},
-          visiting: {}
+          visiting: {},
         }
         break
       case ActionType.DroppedShip:
@@ -21,12 +24,14 @@ export default function shipReducer (draft: Draft<Store>, action: Action) {
         break
     }
   }
-  if (action.type === ActionType.AlarmShipBaby
-    || action.type === ActionType.AlarmShipLow
-    || action.type === ActionType.AlarmShipVeryLow
-    || action.type === ActionType.ChangedShip
-    || action.type === ActionType.UnalarmShipBaby
-    || action.type === ActionType.UnalarmShipLow) {
+  if (
+    action.type === ActionType.AlarmShipBaby ||
+    action.type === ActionType.AlarmShipLow ||
+    action.type === ActionType.AlarmShipVeryLow ||
+    action.type === ActionType.ChangedShip ||
+    action.type === ActionType.UnalarmShipBaby ||
+    action.type === ActionType.UnalarmShipLow
+  ) {
     const ship = getShip(draft, action.fleet, action.ship)
     if (!ship.alarms) {
       ship.alarms = {}

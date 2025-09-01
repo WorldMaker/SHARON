@@ -9,7 +9,10 @@ export interface FleetInfo {
   number: number | null
 }
 
-export function getFleetInfo (fleet: CategoryChannel, doc: any = null): FleetInfo {
+export function getFleetInfo(
+  fleet: CategoryChannel,
+  doc: any = null,
+): FleetInfo {
   if (!doc) {
     doc = (nlp as any)(fleet.name)
   }
@@ -19,6 +22,6 @@ export function getFleetInfo (fleet: CategoryChannel, doc: any = null): FleetInf
     guildId: fleet.guild.id,
     id: fleet.id,
     name: fleet.name,
-    number: values && values.length ? values.numbers[0] : null
+    number: values && values.length ? values.numbers[0] : null,
   }
 }

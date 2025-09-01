@@ -1,4 +1,4 @@
-import { FleetInfo, ShipInfo, PlayerInfo } from '../models/index.ts'
+import { FleetInfo, PlayerInfo, ShipInfo } from '../models/index.ts'
 import { ActionType } from './index.ts'
 
 export interface ActivePlayerAction {
@@ -8,7 +8,11 @@ export interface ActivePlayerAction {
   player: PlayerInfo
 }
 
-export function activePlayer (fleet: FleetInfo, ship: ShipInfo, player: PlayerInfo): ActivePlayerAction {
+export function activePlayer(
+  fleet: FleetInfo,
+  ship: ShipInfo,
+  player: PlayerInfo,
+): ActivePlayerAction {
   return { type: ActionType.ActivePlayer, fleet, ship, player }
 }
 
@@ -20,7 +24,12 @@ export interface AlarmPlayerActivityAction {
   duration: number
 }
 
-export function alarmPlayerActivity (fleet: FleetInfo, ship: ShipInfo, player: PlayerInfo, duration: number): AlarmPlayerActivityAction {
+export function alarmPlayerActivity(
+  fleet: FleetInfo,
+  ship: ShipInfo,
+  player: PlayerInfo,
+  duration: number,
+): AlarmPlayerActivityAction {
   return { type: ActionType.AlarmPlayerActivity, fleet, ship, player, duration }
 }
 
@@ -31,7 +40,11 @@ export interface DeactivePlayerAction {
   player: PlayerInfo
 }
 
-export function deactivePlayer (fleet: FleetInfo, ship: ShipInfo, player: PlayerInfo): DeactivePlayerAction {
+export function deactivePlayer(
+  fleet: FleetInfo,
+  ship: ShipInfo,
+  player: PlayerInfo,
+): DeactivePlayerAction {
   return { type: ActionType.DeactivePlayer, fleet, ship, player }
 }
 
@@ -42,7 +55,11 @@ export interface JoinedShipAction {
   player: PlayerInfo
 }
 
-export function joinedShip (fleet: FleetInfo, ship: ShipInfo, player: PlayerInfo): JoinedShipAction {
+export function joinedShip(
+  fleet: FleetInfo,
+  ship: ShipInfo,
+  player: PlayerInfo,
+): JoinedShipAction {
   return { type: ActionType.JoinedShip, fleet, ship, player }
 }
 
@@ -53,11 +70,16 @@ export interface LeftShipAction {
   player: PlayerInfo
 }
 
-export function leftShip (fleet: FleetInfo, ship: ShipInfo, player: PlayerInfo): LeftShipAction {
+export function leftShip(
+  fleet: FleetInfo,
+  ship: ShipInfo,
+  player: PlayerInfo,
+): LeftShipAction {
   return { type: ActionType.LeftShip, fleet, ship, player }
 }
 
-export type PlayerAction = ActivePlayerAction
+export type PlayerAction =
+  | ActivePlayerAction
   | AlarmPlayerActivityAction
   | DeactivePlayerAction
   | JoinedShipAction

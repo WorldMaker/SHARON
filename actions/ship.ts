@@ -2,12 +2,12 @@ import { FleetInfo, ShipInfo } from '../models/index.ts'
 import { ActionType } from './index.ts'
 
 export interface AddedShipAction {
-  type: ActionType.AddedShip,
+  type: ActionType.AddedShip
   fleet: FleetInfo
   ship: ShipInfo
 }
 
-export function addedShip (fleet: FleetInfo, ship: ShipInfo): AddedShipAction {
+export function addedShip(fleet: FleetInfo, ship: ShipInfo): AddedShipAction {
   return { type: ActionType.AddedShip, fleet, ship }
 }
 
@@ -18,7 +18,11 @@ export interface AlarmShipBabyAction {
   babies: number
 }
 
-export function alarmShipBaby (fleet: FleetInfo, ship: ShipInfo, babies: number): AlarmShipBabyAction {
+export function alarmShipBaby(
+  fleet: FleetInfo,
+  ship: ShipInfo,
+  babies: number,
+): AlarmShipBabyAction {
   return { type: ActionType.AlarmShipBaby, fleet, ship, babies }
 }
 
@@ -29,7 +33,11 @@ export interface AlarmShipLowAction {
   spots: number
 }
 
-export function alarmShipLow (fleet: FleetInfo, ship: ShipInfo, spots: number): AlarmShipLowAction {
+export function alarmShipLow(
+  fleet: FleetInfo,
+  ship: ShipInfo,
+  spots: number,
+): AlarmShipLowAction {
   return { type: ActionType.AlarmShipLow, fleet, ship, spots }
 }
 
@@ -40,7 +48,11 @@ export interface AlarmShipVeryLowAction {
   spots: number
 }
 
-export function alarmShipVeryLow (fleet: FleetInfo, ship: ShipInfo, spots: number): AlarmShipVeryLowAction {
+export function alarmShipVeryLow(
+  fleet: FleetInfo,
+  ship: ShipInfo,
+  spots: number,
+): AlarmShipVeryLowAction {
   return { type: ActionType.AlarmShipVeryLow, fleet, ship, spots }
 }
 
@@ -51,7 +63,11 @@ export interface ChangedShipAction {
   ship: ShipInfo
 }
 
-export function changedShip (fleet: FleetInfo, oldShip: ShipInfo, ship: ShipInfo): ChangedShipAction {
+export function changedShip(
+  fleet: FleetInfo,
+  oldShip: ShipInfo,
+  ship: ShipInfo,
+): ChangedShipAction {
   return { type: ActionType.ChangedShip, fleet, oldShip, ship }
 }
 
@@ -61,7 +77,7 @@ export interface CheckShipAction {
   ship: ShipInfo
 }
 
-export function checkShip (fleet: FleetInfo, ship: ShipInfo): CheckShipAction {
+export function checkShip(fleet: FleetInfo, ship: ShipInfo): CheckShipAction {
   return { type: ActionType.CheckShip, fleet, ship }
 }
 
@@ -71,7 +87,10 @@ export interface DroppedShipAction {
   ship: ShipInfo
 }
 
-export function droppedShip (fleet: FleetInfo, ship: ShipInfo): DroppedShipAction {
+export function droppedShip(
+  fleet: FleetInfo,
+  ship: ShipInfo,
+): DroppedShipAction {
   return { type: ActionType.DroppedShip, fleet, ship }
 }
 
@@ -81,7 +100,10 @@ export interface UnalarmShipBabyAction {
   ship: ShipInfo
 }
 
-export function unalarmShipBaby (fleet: FleetInfo, ship: ShipInfo): UnalarmShipBabyAction {
+export function unalarmShipBaby(
+  fleet: FleetInfo,
+  ship: ShipInfo,
+): UnalarmShipBabyAction {
   return { type: ActionType.UnalarmShipBaby, fleet, ship }
 }
 
@@ -91,11 +113,15 @@ export interface UnalarmShipLowAction {
   ship: ShipInfo
 }
 
-export function unalarmShipLow (fleet: FleetInfo, ship: ShipInfo): UnalarmShipLowAction {
+export function unalarmShipLow(
+  fleet: FleetInfo,
+  ship: ShipInfo,
+): UnalarmShipLowAction {
   return { type: ActionType.UnalarmShipLow, fleet, ship }
 }
 
-export type ShipAction = AddedShipAction
+export type ShipAction =
+  | AddedShipAction
   | AlarmShipBabyAction
   | AlarmShipLowAction
   | AlarmShipVeryLowAction

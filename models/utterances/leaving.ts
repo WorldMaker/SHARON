@@ -3,7 +3,7 @@ import { nlp } from '../index.ts'
 export enum LeavingType {
   Now = 'now',
   Soon = 'soon',
-  At = 'at'
+  At = 'at',
 }
 
 export interface LeavingNow {
@@ -28,7 +28,10 @@ export interface LeavingUtterance {
   when?: LeavingWhen
 }
 
-export default function examineForLeaving (utterance: string, doc: any = null): LeavingUtterance | null {
+export default function examineForLeaving(
+  utterance: string,
+  doc: any = null,
+): LeavingUtterance | null {
   if (!doc) {
     doc = (nlp as any)(utterance)
   }
@@ -39,7 +42,7 @@ export default function examineForLeaving (utterance: string, doc: any = null): 
 
   const verbs = doc.verbs()
   const negative = verbs.isNegative().found
-  const personal = doc.has('(i|i\'m)')
+  const personal = doc.has("(i|i'm)")
 
   let when: LeavingWhen | undefined = undefined
 

@@ -1,11 +1,23 @@
 import * as Discord from 'discord.js'
 import { Dispatch } from 'redux'
-import { Action, closedFleet, newFleet, checkFleet, droppedShip, addedShip, changedShip } from '../actions/index.ts'
+import {
+  Action,
+  addedShip,
+  changedShip,
+  checkFleet,
+  closedFleet,
+  droppedShip,
+  newFleet,
+} from '../actions/index.ts'
 import { getChannelInfo } from '../models/channel.ts'
 import { getFleetInfo } from '../models/fleet.ts'
 import { ChannelType } from '../models/index.ts'
 
-export default function channelUpdate (dispatch: Dispatch<Action>, oldChannel: Discord.Channel, newChannel: Discord.Channel) {
+export default function channelUpdate(
+  dispatch: Dispatch<Action>,
+  oldChannel: Discord.Channel,
+  newChannel: Discord.Channel,
+) {
   const oldInfo = getChannelInfo(oldChannel)
   const newInfo = getChannelInfo(newChannel)
   if (oldInfo && oldInfo.type === ChannelType.Fleet) {
@@ -15,15 +27,24 @@ export default function channelUpdate (dispatch: Dispatch<Action>, oldChannel: D
     dispatch(newFleet(newInfo))
     dispatch(checkFleet(newInfo))
   }
-  if (oldInfo && oldInfo.type === ChannelType.Ship && (!newInfo || newInfo.type !== ChannelType.Ship)) {
+  if (
+    oldInfo && oldInfo.type === ChannelType.Ship &&
+    (!newInfo || newInfo.type !== ChannelType.Ship)
+  ) {
     const fleet = getFleetInfo((oldChannel as Discord.GuildChannel).parent!)
     dispatch(droppedShip(fleet, oldInfo))
   }
-  if (newInfo && newInfo.type === ChannelType.Ship && (!oldInfo || oldInfo.type !== ChannelType.Ship)) {
+  if (
+    newInfo && newInfo.type === ChannelType.Ship &&
+    (!oldInfo || oldInfo.type !== ChannelType.Ship)
+  ) {
     const fleet = getFleetInfo((newChannel as Discord.GuildChannel).parent!)
     dispatch(addedShip(fleet, newInfo))
   }
-  if (oldInfo && newInfo && oldInfo.type === ChannelType.Ship && newInfo.type === ChannelType.Ship) {
+  if (
+    oldInfo && newInfo && oldInfo.type === ChannelType.Ship &&
+    newInfo.type === ChannelType.Ship
+  ) {
     const fleet = getFleetInfo((newChannel as Discord.GuildChannel).parent!)
     dispatch(changedShip(fleet, oldInfo, newInfo))
   }

@@ -1,10 +1,10 @@
 {
-    "words": {
-        "fleet": "Fleet",
-        "gal": "Ship",
-        "galleon": "Ship",
-        "brig": "Ship",
-        "brigantine": "Ship",
-        "sloop": "Ship"
-    }
+  "words": {
+    "fleet": "Fleet",
+    "gal": "Ship",
+    "galleon": "Ship",
+    "brig": "Ship",
+    "brigantine": "Ship",
+    "sloop": "Ship"
+  }
 }

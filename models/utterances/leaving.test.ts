@@ -9,7 +9,7 @@ Deno.test('leaving corpus', () => {
   const test2 = examineLeaving('I am leaving')
   expect(test2 && test2.personal).toBeTruthy()
   expect(test2 && test2.negative).toBeFalsy()
-  const test3 = examineLeaving('I\'m not leaving')
+  const test3 = examineLeaving("I'm not leaving")
   expect(test3 && test3.personal).toBeTruthy()
   expect(test3 && test3.negative).toBeTruthy()
 })

@@ -3,12 +3,14 @@ import { Action, ActionType } from '../actions/index.ts'
 import { Store } from '../models/store/index.ts'
 import { getPlayer, getShip } from './model.ts'
 
-export default function playerReducer (draft: Draft<Store>, action: Action) {
-  if (action.type === ActionType.ActivePlayer
-    || action.type === ActionType.AlarmPlayerActivity
-    || action.type === ActionType.DeactivePlayer
-    || action.type === ActionType.JoinedShip
-    || action.type === ActionType.LeftShip) {
+export default function playerReducer(draft: Draft<Store>, action: Action) {
+  if (
+    action.type === ActionType.ActivePlayer ||
+    action.type === ActionType.AlarmPlayerActivity ||
+    action.type === ActionType.DeactivePlayer ||
+    action.type === ActionType.JoinedShip ||
+    action.type === ActionType.LeftShip
+  ) {
     const ship = getShip(draft, action.fleet, action.ship)
     const player = getPlayer(draft, action.fleet, action.player)
     switch (action.type) {
@@ -22,7 +24,7 @@ export default function playerReducer (draft: Draft<Store>, action: Action) {
           player.activity.push({
             time: ship.active[action.player.id]!,
             shipId: action.ship.id,
-            isActive: true
+            isActive: true,
           })
         }
         break
@@ -42,7 +44,7 @@ export default function playerReducer (draft: Draft<Store>, action: Action) {
           player.activity.push({
             time: ship.left[action.player.id]!,
             shipId: action.ship.id,
-            isActive: false
+            isActive: false,
           })
         }
         break

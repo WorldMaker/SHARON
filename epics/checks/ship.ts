@@ -1,9 +1,14 @@
 import { differenceInMilliseconds } from 'date-fns'
 import { VoiceChannel } from 'discord.js'
-import { StateObservable, ofType } from 'redux-observable'
-import { Observable, from, of } from 'rxjs'
-import { map, concatMap } from 'rxjs/operators'
-import { joinedShip, leftShip, activePlayer, deactivePlayer } from '../../actions/player.ts'
+import { ofType, StateObservable } from 'redux-observable'
+import { from, Observable, of } from 'rxjs'
+import { concatMap, map } from 'rxjs/operators'
+import {
+  activePlayer,
+  deactivePlayer,
+  joinedShip,
+  leftShip,
+} from '../../actions/player.ts'
 import { changedShip, checkShip, droppedShip } from '../../actions/ship.ts'
 import { Action, ActionType } from '../../actions/index.ts'
 import { getChannelInfo, isShip } from '../../models/channel.ts'
@@ -12,10 +17,14 @@ import { Store } from '../../models/store/index.ts'
 import { DiscordDependency } from '../model.ts'
 import { ActivityInterval } from '../player-activity.ts'
 
-export default function checkShipEpic (action: Observable<Action>, state: StateObservable<Store>, { client }: DiscordDependency) {
+export default function checkShipEpic(
+  action: Observable<Action>,
+  state: StateObservable<Store>,
+  { client }: DiscordDependency,
+) {
   return action.pipe(
     ofType(ActionType.CheckShip),
-    map(action => {
+    map((action) => {
       const channel = client.channels.get(action.ship.id)
       return { action, channel, info: channel ? getChannelInfo(channel) : null }
     }),
@@ -26,49 +35,78 @@ export default function checkShipEpic (action: Observable<Action>, state: StateO
       if (action.ship.name !== info.name) {
         return from([
           changedShip(action.fleet, action.ship, info),
-          checkShip(action.fleet, info)
+          checkShip(action.fleet, info),
         ])
       }
-      const ship = state.value.guilds[action.fleet.guildId].fleets[action.fleet.id].ships[action.ship.id]
-      const leftPlayers = [...Object.keys(ship.active), ...Object.keys(ship.visiting)]
-        .filter(key => !(channel as VoiceChannel).members.has(key))
-        .map(key => {
+      const ship =
+        state.value.guilds[action.fleet.guildId].fleets[action.fleet.id]
+          .ships[action.ship.id]
+      const leftPlayers = [
+        ...Object.keys(ship.active),
+        ...Object.keys(ship.visiting),
+      ]
+        .filter((key) => !(channel as VoiceChannel).members.has(key))
+        .map((key) => {
           const member = (channel as VoiceChannel).guild.members.get(key)
-          return leftShip(action.fleet, action.ship, member
-            ? getPlayerInfo(action.fleet, action.ship, member)
-            : {
+          return leftShip(
+            action.fleet,
+            action.ship,
+            member ? getPlayerInfo(action.fleet, action.ship, member) : {
               fleetId: action.fleet.id,
               guildId: action.fleet.guildId,
               shipId: action.ship.id,
               id: key,
               highestRoleName: null,
               name: `<@${key}>`,
-              username: `<@${key}>`
-            })
+              username: `<@${key}>`,
+            },
+          )
         })
       const joinPlayers = (channel as VoiceChannel).members.array()
-        .filter(member => !ship.active[member.id] || !ship.visiting[member.id])
-        .map(member => joinedShip(action.fleet, action.ship, getPlayerInfo(action.fleet, action.ship, member)))
+        .filter((member) =>
+          !ship.active[member.id] || !ship.visiting[member.id]
+        )
+        .map((member) =>
+          joinedShip(
+            action.fleet,
+            action.ship,
+            getPlayerInfo(action.fleet, action.ship, member),
+          )
+        )
       const activePlayers = [...Object.keys(ship.visiting)]
-        .filter(key => (channel as VoiceChannel).members.has(key)
-          && differenceInMilliseconds(new Date(), ship.visiting[key]!) >= ActivityInterval)
-        .map(key => {
+        .filter((key) =>
+          (channel as VoiceChannel).members.has(key) &&
+          differenceInMilliseconds(new Date(), ship.visiting[key]!) >=
+            ActivityInterval
+        )
+        .map((key) => {
           const member = (channel as VoiceChannel).guild.members.get(key)
-          return activePlayer(action.fleet, action.ship, getPlayerInfo(action.fleet, action.ship, member!))
+          return activePlayer(
+            action.fleet,
+            action.ship,
+            getPlayerInfo(action.fleet, action.ship, member!),
+          )
         })
       const deactivePlayers = [...Object.keys(ship.leaving)]
-        .filter(key => !(channel as VoiceChannel).members.has(key)
-          && differenceInMilliseconds(new Date(), ship.visiting[key]!) >= ActivityInterval)
-        .map(key => {
+        .filter((key) =>
+          !(channel as VoiceChannel).members.has(key) &&
+          differenceInMilliseconds(new Date(), ship.visiting[key]!) >=
+            ActivityInterval
+        )
+        .map((key) => {
           const member = (channel as VoiceChannel).guild.members.get(key)
-          return deactivePlayer(action.fleet, action.ship, getPlayerInfo(action.fleet, action.ship, member!))
+          return deactivePlayer(
+            action.fleet,
+            action.ship,
+            getPlayerInfo(action.fleet, action.ship, member!),
+          )
         })
       return from([
         ...leftPlayers,
         ...joinPlayers,
         ...activePlayers,
-        ...deactivePlayers
+        ...deactivePlayers,
       ])
-    })
+    }),
   )
 }
