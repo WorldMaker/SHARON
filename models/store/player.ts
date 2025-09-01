@@ -1,5 +1,5 @@
 import { differenceInMilliseconds } from 'date-fns'
-import { PlayerInfo } from '../player'
+import { PlayerInfo } from '../player.ts'
 
 export interface ActivityLog {
   readonly time: string
@@ -24,19 +24,24 @@ interface ActivityDurationAccumulator {
   lastActiveSeen: string | null
 }
 
-export function getPlayerActivityDuration (activity: ReadonlyArray<ActivityLog> | null | undefined): number {
+export function getPlayerActivityDuration(
+  activity: ReadonlyArray<ActivityLog> | null | undefined,
+): number {
   if (!activity) {
     return 0
   }
   return activity.reduce((acc, cur) => {
     if (!cur.isActive && acc.lastActiveSeen) {
-      return { duration: acc.duration + differenceInMilliseconds(cur.time, acc.lastActiveSeen), lastActiveSeen: null }
+      return {
+        duration: acc.duration +
+          differenceInMilliseconds(cur.time, acc.lastActiveSeen),
+        lastActiveSeen: null,
+      }
     }
     if (cur.isActive && !acc.lastActiveSeen) {
       return { duration: acc.duration, lastActiveSeen: cur.time }
     }
     return acc
-  },
-    { duration: 0, lastActiveSeen: null } as ActivityDurationAccumulator)
+  }, { duration: 0, lastActiveSeen: null } as ActivityDurationAccumulator)
     .duration
 }

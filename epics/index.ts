@@ -1,16 +1,16 @@
 import { combineEpics } from 'redux-observable'
-import reportFleetAlarmsEpic from './alarms/fleet-report'
-import playerActivityAlarmEpic from './alarms/player-activity'
-import shipCountAlarmsEpic from './alarms/ship-counts'
-import basicLoggingEpic from './basic-logging'
-import checkAllEpic from './checks/all'
-import checkGuildEpic from './checks/guild'
-import checkFleetEpic from './checks/fleet'
-import checkShipEpic from './checks/ship'
-import checkSometimesEpic from './checks/sometimes'
-import reportFleetStatusEpic from './fleet-status'
-import playerActivityEpic from './player-activity'
-import storageEpic from './storage'
+import reportFleetAlarmsEpic from './alarms/fleet-report.ts'
+import playerActivityAlarmEpic from './alarms/player-activity.ts'
+import shipCountAlarmsEpic from './alarms/ship-counts.ts'
+import basicLoggingEpic from './basic-logging.ts'
+import checkAllEpic from './checks/all.ts'
+import checkGuildEpic from './checks/guild.ts'
+import checkFleetEpic from './checks/fleet.ts'
+import checkShipEpic from './checks/ship.ts'
+import checkSometimesEpic from './checks/sometimes.ts'
+import reportFleetStatusEpic from './fleet-status.ts'
+import playerActivityEpic from './player-activity.ts'
+import storageEpic from './storage.ts'
 
 const rootEpic = combineEpics(
   basicLoggingEpic,
@@ -24,7 +24,7 @@ const rootEpic = combineEpics(
   reportFleetAlarmsEpic,
   reportFleetStatusEpic,
   shipCountAlarmsEpic,
-  storageEpic
+  storageEpic,
 )
 
 export default rootEpic

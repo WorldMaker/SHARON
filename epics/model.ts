@@ -5,10 +5,14 @@ const FleetStatusChannel = 'fleet-status'
 export const ShoutMode = true
 
 export interface DiscordDependency {
-  client: Discord.Client
+  client: Discord.Client<true>
 }
 
-export async function log (client: Discord.Client, guildId: string | null, message: string | null) {
+export async function log(
+  client: Discord.Client<true>,
+  guildId: string | null,
+  message: string | null,
+) {
   if (!message) {
     return
   }
@@ -19,9 +23,11 @@ export async function log (client: Discord.Client, guildId: string | null, messa
     console.log(message)
     return
   }
-  const guild = client.guilds.get(guildId)
+  const guild = await client.guilds.fetch(guildId)
   if (guild && guild.available) {
-    const logChannel = guild.channels.find(c => c.name === 'sharon-log')
+    const logChannel = (await guild.channels.fetch()).find((c) =>
+      c?.name === 'sharon-log'
+    )
     if (logChannel && logChannel instanceof Discord.TextChannel) {
       await logChannel.send(message)
     } else {
@@ -32,17 +38,26 @@ export async function log (client: Discord.Client, guildId: string | null, messa
   }
 }
 
-export async function sendFleetStatus (client: Discord.Client, guildId: string, fleetId: string, message: string | null) {
+export async function sendFleetStatus(
+  client: Discord.Client<true>,
+  guildId: string,
+  fleetId: string,
+  message: string | null,
+) {
   if (!message) {
     return
   }
-  const guild = client.guilds.get(guildId)
+  const guild = client.guilds.valueOf().get(guildId)
   if (guild && guild.available) {
-    const fleet = guild.channels.get(fleetId)
+    const fleet = guild.channels.valueOf().get(fleetId)
     if (fleet && fleet instanceof Discord.CategoryChannel) {
-      const statusChannel = fleet.children.find(c => c.name === FleetStatusChannel)
+      const statusChannel = fleet.children.valueOf().find((c) =>
+        c.name === FleetStatusChannel
+      )
       if (statusChannel && statusChannel instanceof Discord.TextChannel) {
-        await statusChannel.send(ShoutMode ? message.toLocaleUpperCase() : message)
+        await statusChannel.send(
+          ShoutMode ? message.toLocaleUpperCase() : message,
+        )
       }
     }
   }

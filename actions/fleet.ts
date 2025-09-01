@@ -1,12 +1,12 @@
-import { FleetInfo } from '../models'
-import { ActionType } from './index'
+import { FleetInfo } from '../models/index.ts'
+import { ActionType } from './index.ts'
 
 export interface CheckFleetAction {
   type: ActionType.CheckFleet
   fleet: FleetInfo
 }
 
-export function checkFleet (fleet: FleetInfo): CheckFleetAction {
+export function checkFleet(fleet: FleetInfo): CheckFleetAction {
   return { type: ActionType.CheckFleet, fleet }
 }
 
@@ -15,7 +15,7 @@ export interface ClosedFleetAction {
   fleet: FleetInfo
 }
 
-export function closedFleet (fleet: FleetInfo): ClosedFleetAction {
+export function closedFleet(fleet: FleetInfo): ClosedFleetAction {
   return { type: ActionType.ClosedFleet, fleet }
 }
 
@@ -24,10 +24,11 @@ export interface NewFleetAction {
   fleet: FleetInfo
 }
 
-export function newFleet (fleet: FleetInfo): NewFleetAction {
+export function newFleet(fleet: FleetInfo): NewFleetAction {
   return { type: ActionType.NewFleet, fleet }
 }
 
-export type FleetAction = CheckFleetAction
+export type FleetAction =
+  | CheckFleetAction
   | ClosedFleetAction
   | NewFleetAction

@@ -1,4 +1,4 @@
-import { ShipInfo } from '../ship'
+import { ShipInfo } from '../ship.ts'
 
 export interface ShipPlayerStore {
   readonly [id: string]: string | undefined

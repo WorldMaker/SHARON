@@ -1,4 +1,4 @@
-import { FleetStore } from './fleet'
+import { FleetStore } from './fleet.ts'
 
 export interface GuildStore {
   readonly [guildId: string]: {
@@ -8,4 +8,8 @@ export interface GuildStore {
 
 export interface Store {
   readonly guilds: GuildStore
+}
+
+export const initialState: Store = {
+  guilds: {},
 }

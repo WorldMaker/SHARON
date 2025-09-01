@@ -1,16 +1,12 @@
 import nlp from 'compromise'
-import * as nlpPlugin from './compromise-plugin.json'
-import { ChannelType } from './channel-type'
-import { FleetInfo } from './fleet'
-import { PlayerInfo } from './player'
-import { ShipInfo } from './ship'
+import nlpPlugin from './compromise-plugin.json' with { type: 'json' }
+import { ChannelType } from './channel-type.ts'
+import { FleetInfo } from './fleet.ts'
+import { PlayerInfo } from './player.ts'
+import { ShipInfo } from './ship.ts'
 
 nlp.plugin(nlpPlugin)
 
-export {
-  ChannelType,
-  FleetInfo,
-  PlayerInfo,
-  ShipInfo,
-  nlp
-}
+export type View = ReturnType<typeof nlp>
+
+export { ChannelType, type FleetInfo, nlp, type PlayerInfo, type ShipInfo }

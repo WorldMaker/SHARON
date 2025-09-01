@@ -1,5 +1,5 @@
 import { CategoryChannel } from 'discord.js'
-import { ChannelType, nlp } from './index'
+import { ChannelType, nlp, View } from './index.ts'
 
 export interface FleetInfo {
   type: ChannelType.Fleet
@@ -9,16 +9,19 @@ export interface FleetInfo {
   number: number | null
 }
 
-export function getFleetInfo (fleet: CategoryChannel, doc: any = null): FleetInfo {
+export function getFleetInfo(
+  fleet: CategoryChannel,
+  doc: View | null = null,
+): FleetInfo {
   if (!doc) {
-    doc = (nlp as any)(fleet.name)
+    doc = nlp(fleet.name)
   }
-  const values = doc.values()
+  const values = doc.numbers().get(0)
   return {
     type: ChannelType.Fleet,
     guildId: fleet.guild.id,
     id: fleet.id,
     name: fleet.name,
-    number: values && values.length ? values.numbers[0] : null
+    number: values && typeof values === 'number' ? values : null,
   }
 }

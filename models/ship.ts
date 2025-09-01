@@ -1,7 +1,13 @@
 import { VoiceChannel } from 'discord.js'
-import { ChannelType, nlp } from './index'
+import { ChannelType, nlp, View } from './index.ts'
 
-export type ShipType = 'gal' | 'galleon' | 'brig' | 'brigantine' | 'sloop' | 'ship'
+export type ShipType =
+  | 'gal'
+  | 'galleon'
+  | 'brig'
+  | 'brigantine'
+  | 'sloop'
+  | 'ship'
 
 export interface ShipInfo {
   type: ChannelType.Ship
@@ -30,40 +36,43 @@ export const shipTypes: ShipTypeLookup = Object.freeze({
     total: 4,
     babySpots: 3,
     lowSpots: 2,
-    veryLowSpots: 1
+    veryLowSpots: 1,
   }),
   galleon: Object.freeze({
     total: 4,
     babySpots: 3,
     lowSpots: 2,
-    veryLowSpots: 1
+    veryLowSpots: 1,
   }),
   brig: Object.freeze({
     normative: 'brigantine',
     total: 3,
     babySpots: 3,
     lowSpots: 1,
-    veryLowSpots: 0
+    veryLowSpots: 0,
   }),
   brigantine: Object.freeze({
     total: 3,
     babySpots: 3,
     lowSpots: 1,
-    veryLowSpots: 0
+    veryLowSpots: 0,
   }),
   sloop: Object.freeze({
     total: 2,
     babySpots: 1,
     lowSpots: 0,
-    veryLowSpots: -1
-  })
+    veryLowSpots: -1,
+  }),
 })
 
-export function getShipInfo (ship: VoiceChannel, doc: any = null): ShipInfo {
+export function getShipInfo(
+  ship: VoiceChannel,
+  doc: View | null = null,
+): ShipInfo {
   if (!doc) {
-    doc = (nlp as any)(ship.name)
+    doc = nlp(ship.name)
   }
-  const values = doc.values()
+  const values = doc.numbers().get(0)
   return {
     type: ChannelType.Ship,
     fleetId: ship.parent!.id,
@@ -71,6 +80,6 @@ export function getShipInfo (ship: VoiceChannel, doc: any = null): ShipInfo {
     id: ship.id,
     name: ship.name,
     shipType: doc.match('#Ship').out('normal'),
-    number: values && values.length ? values.numbers[0] : null
+    number: values && typeof values === 'number' ? values : null,
   }
 }
