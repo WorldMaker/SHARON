@@ -45,11 +45,11 @@ export async function sendFleetStatus(
   if (!message) {
     return
   }
-  const guild = client.guilds.get(guildId)
+  const guild = client.guilds.valueOf().get(guildId)
   if (guild && guild.available) {
-    const fleet = guild.channels.get(fleetId)
+    const fleet = guild.channels.valueOf().get(fleetId)
     if (fleet && fleet instanceof Discord.CategoryChannel) {
-      const statusChannel = fleet.children.find((c) =>
+      const statusChannel = fleet.children.valueOf().find((c) =>
         c.name === FleetStatusChannel
       )
       if (statusChannel && statusChannel instanceof Discord.TextChannel) {

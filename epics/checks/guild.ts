@@ -30,7 +30,7 @@ export default function checkGuildEpic(
     }),
     map((channel) => getChannelInfo(channel)),
     filter(isFleet),
-    filter((fleet) => !state.value.guilds[fleet.guildId].fleets[fleet.id]),
+    filter((fleet) => !state.value.guilds[fleet.guildId]?.fleets[fleet.id]),
     concatMap((fleet) =>
       from([
         newFleet(fleet),

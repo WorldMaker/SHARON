@@ -3,6 +3,7 @@ node_modules
 **/*.js.map
 
 .env
+_data
 secrets.json
 store.json
 

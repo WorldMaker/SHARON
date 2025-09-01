@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "dev": "deno run --watch index.ts"
+    "start": "deno run -A --env-file index.ts"
   },
   "imports": {
     "@std/expect": "jsr:@std/expect@^1.0.17",
