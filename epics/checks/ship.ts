@@ -25,7 +25,7 @@ export default function checkShipEpic(
   return action.pipe(
     ofType(ActionType.CheckShip),
     map((action) => {
-      const channel = client.channels.get(action.ship.id)
+      const channel = client.channels.resolve(action.ship.id)
       return { action, channel, info: channel ? getChannelInfo(channel) : null }
     }),
     concatMap(({ action, channel, info }) => {
@@ -47,7 +47,7 @@ export default function checkShipEpic(
       ]
         .filter((key) => !(channel as VoiceChannel).members.has(key))
         .map((key) => {
-          const member = (channel as VoiceChannel).guild.members.get(key)
+          const member = (channel as VoiceChannel).guild.members.resolve(key)
           return leftShip(
             action.fleet,
             action.ship,
@@ -62,7 +62,7 @@ export default function checkShipEpic(
             },
           )
         })
-      const joinPlayers = (channel as VoiceChannel).members.array()
+      const joinPlayers = [...(channel as VoiceChannel).members.values()]
         .filter((member) =>
           !ship.active[member.id] || !ship.visiting[member.id]
         )
@@ -80,7 +80,7 @@ export default function checkShipEpic(
             ActivityInterval
         )
         .map((key) => {
-          const member = (channel as VoiceChannel).guild.members.get(key)
+          const member = (channel as VoiceChannel).guild.members.resolve(key)
           return activePlayer(
             action.fleet,
             action.ship,
@@ -94,7 +94,7 @@ export default function checkShipEpic(
             ActivityInterval
         )
         .map((key) => {
-          const member = (channel as VoiceChannel).guild.members.get(key)
+          const member = (channel as VoiceChannel).guild.members.resolve(key)
           return deactivePlayer(
             action.fleet,
             action.ship,

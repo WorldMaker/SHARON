@@ -22,9 +22,9 @@ export default function checkGuildEpic(
 
   const newFleets = checkGuilds.pipe(
     concatMap(({ guildId }) => {
-      const guild = client.guilds.get(guildId)
+      const guild = client.guilds.resolve(guildId)
       if (guild && guild.available) {
-        return from(guild.channels.values())
+        return from(guild.channels.valueOf().values())
       }
       return from([])
     }),

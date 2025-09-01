@@ -22,7 +22,7 @@ export default function checkFleetEpic(
   return action.pipe(
     ofType(ActionType.CheckFleet),
     map((action) => {
-      const channel = client.channels.get(action.fleet.id)
+      const channel = client.channels.resolve(action.fleet.id)
       return { action, channel, info: channel ? getChannelInfo(channel) : null }
     }),
     concatMap(({ action, channel, info }) => {
@@ -40,7 +40,7 @@ export default function checkFleetEpic(
         state.value.guilds[action.fleet.guildId].fleets[action.fleet.id]
       const checkShips = Object.keys(fleet.ships)
         .map((key) => checkShip(info, fleet.ships[key].info) as Action)
-      for (const subChannel of (channel as CategoryChannel).children.values()) {
+      for (const subChannel of (channel as CategoryChannel).children.valueOf().values()) {
         const subInfo = getChannelInfo(subChannel)
         if (subInfo && isShip(subInfo) && !fleet.ships[subInfo.id]) {
           checkShips.push(addedShip(info, subInfo), checkShip(info, subInfo))

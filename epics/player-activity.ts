@@ -27,10 +27,10 @@ export default function playerActivityEpic(
         delay(ActivityInterval),
         mergeMap((joinedShip) => {
           // Double check user is still connected
-          const guild = client.guilds.get(joinedShip.ship.guildId)
+          const guild = client.guilds.resolve(joinedShip.ship.guildId)
           if (guild && guild.available) {
-            const member = guild.members.get(joinedShip.player.id)
-            if (member && member.voiceChannelID === joinedShip.ship.id) {
+            const member = guild.members.resolve(joinedShip.player.id)
+            if (member && member.voice.channelId === joinedShip.ship.id) {
               return from([
                 activePlayer(
                   joinedShip.fleet,
@@ -60,10 +60,10 @@ export default function playerActivityEpic(
         delay(ActivityInterval),
         mergeMap((joinedShip) => {
           // Double check user is still connected
-          const guild = client.guilds.get(joinedShip.ship.guildId)
+          const guild = client.guilds.resolve(joinedShip.ship.guildId)
           if (guild && guild.available) {
-            const member = guild.members.get(joinedShip.player.id)
-            if (member && member.voiceChannelID !== joinedShip.ship.id) {
+            const member = guild.members.resolve(joinedShip.player.id)
+            if (member && member.voice.channelId !== joinedShip.ship.id) {
               return from([
                 deactivePlayer(
                   joinedShip.fleet,
