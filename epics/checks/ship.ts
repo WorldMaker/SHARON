@@ -4,7 +4,7 @@ import { StateObservable, ofType } from 'redux-observable'
 import { Observable, from, of } from 'rxjs'
 import { map, concatMap } from 'rxjs/operators'
 import { joinedShip, leftShip, activePlayer, deactivePlayer } from '../../actions/player.ts'
-import { CheckShipAction, changedShip, checkShip, droppedShip } from '../../actions/ship.ts'
+import { changedShip, checkShip, droppedShip } from '../../actions/ship.ts'
 import { Action, ActionType } from '../../actions/index.ts'
 import { getChannelInfo, isShip } from '../../models/channel.ts'
 import { getPlayerInfo } from '../../models/player.ts'
@@ -14,7 +14,7 @@ import { ActivityInterval } from '../player-activity.ts'
 
 export default function checkShipEpic (action: Observable<Action>, state: StateObservable<Store>, { client }: DiscordDependency) {
   return action.pipe(
-    ofType<Action, CheckShipAction>(ActionType.CheckShip),
+    ofType(ActionType.CheckShip),
     map(action => {
       const channel = client.channels.get(action.ship.id)
       return { action, channel, info: channel ? getChannelInfo(channel) : null }
@@ -41,7 +41,7 @@ export default function checkShipEpic (action: Observable<Action>, state: StateO
               guildId: action.fleet.guildId,
               shipId: action.ship.id,
               id: key,
-              hoistRoleName: null,
+              highestRoleName: null,
               name: `<@${key}>`,
               username: `<@${key}>`
             })

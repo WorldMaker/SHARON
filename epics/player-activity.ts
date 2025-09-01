@@ -1,7 +1,7 @@
 import { StateObservable, ofType } from 'redux-observable'
 import { Observable, merge, of, from, race } from 'rxjs'
 import { mergeMap, delay, takeUntil, last, filter } from 'rxjs/operators'
-import { JoinedShipAction, LeftShipAction, activePlayer, deactivePlayer } from '../actions/player.ts'
+import { activePlayer, deactivePlayer } from '../actions/player.ts'
 import { Action, ActionType } from '../actions/index.ts'
 import { Store } from '../models/store/index.ts'
 import { DiscordDependency } from './model.ts'
@@ -10,11 +10,11 @@ export const ActivityInterval = 5 /* m */ * 60 /* s */ * 1000 /* ms */
 
 export default function playerActivityEpic (action: Observable<Action>, _state: StateObservable<Store>, { client }: DiscordDependency) {
   const activePlayers = action.pipe(
-    ofType<Action, JoinedShipAction>(ActionType.JoinedShip),
+    ofType(ActionType.JoinedShip),
     mergeMap(joinedShip => of(joinedShip).pipe(
       takeUntil(race(
         action.pipe(
-          ofType<Action, LeftShipAction | JoinedShipAction>(ActionType.LeftShip, ActionType.JoinedShip),
+          ofType(ActionType.LeftShip, ActionType.JoinedShip),
           filter(leftShip => leftShip.player.id === joinedShip.player.id)
         ),
         action.pipe(last())
@@ -37,11 +37,11 @@ export default function playerActivityEpic (action: Observable<Action>, _state: 
   )
 
   const deactivePlayers = action.pipe(
-    ofType<Action, LeftShipAction>(ActionType.LeftShip),
+    ofType(ActionType.LeftShip),
     mergeMap(leftShip => of(leftShip).pipe(
       takeUntil(race(
         action.pipe(
-          ofType<Action, LeftShipAction | JoinedShipAction>(ActionType.LeftShip, ActionType.JoinedShip),
+          ofType(ActionType.LeftShip, ActionType.JoinedShip),
           filter(joinedShip => joinedShip.player.id === leftShip.player.id)
         ),
         action.pipe(last())

@@ -1,29 +1,14 @@
 import { StateObservable, ofType } from 'redux-observable'
 import { Observable, from } from 'rxjs'
 import { concatMap, debounceTime, groupBy, ignoreElements, mergeMap } from 'rxjs/operators'
-import { AlarmPlayerActivityAction, ActivePlayerAction, DeactivePlayerAction, JoinedShipAction, LeftShipAction } from '../actions/player'
-import { AlarmShipBabyAction, AlarmShipLowAction, AlarmShipVeryLowAction, UnalarmShipBabyAction, UnalarmShipLowAction } from '../actions/ship'
-import { CheckFleetAction } from '../actions/fleet.ts'
 import { Action, ActionType } from '../actions/index.ts'
 import { Store } from '../models/store/index.ts'
 import fleetStatus from '../reports/fleet-status.ts'
 import { DiscordDependency, sendFleetStatus } from './model.ts'
 
-type ReportActions = CheckFleetAction
-  | AlarmPlayerActivityAction
-  | AlarmShipBabyAction
-  | AlarmShipLowAction
-  | AlarmShipVeryLowAction
-  | ActivePlayerAction
-  | DeactivePlayerAction
-  | JoinedShipAction
-  | LeftShipAction
-  | UnalarmShipBabyAction
-  | UnalarmShipLowAction
-
 export default function reportFleetStatusEpic (action: Observable<Action>, state: StateObservable<Store>, { client }: DiscordDependency) {
   return action.pipe(
-    ofType<Action, ReportActions>(
+    ofType(
       ActionType.CheckFleet,
       ActionType.AlarmPlayerActivity,
       ActionType.AlarmShipBaby,

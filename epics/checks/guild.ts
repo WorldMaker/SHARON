@@ -1,7 +1,6 @@
 import { StateObservable, ofType } from 'redux-observable'
 import { Observable, from, merge } from 'rxjs'
 import { map, concatMap, filter } from 'rxjs/operators'
-import { CheckGuildAction } from '../../actions/guild.ts'
 import { Action, ActionType, checkFleet, newFleet } from '../../actions/index.ts'
 import { getChannelInfo, isFleet } from '../../models/channel.ts'
 import { Store } from '../../models/store/index.ts'
@@ -9,7 +8,7 @@ import { DiscordDependency } from '../model.ts'
 
 export default function checkGuildEpic (action: Observable<Action>, state: StateObservable<Store>, { client }: DiscordDependency) {
   const checkGuilds = action.pipe(
-    ofType<Action, CheckGuildAction>(ActionType.CheckGuild)
+    ofType(ActionType.CheckGuild)
   )
 
   const newFleets = checkGuilds.pipe(
