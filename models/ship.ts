@@ -65,7 +65,10 @@ export const shipTypes: ShipTypeLookup = Object.freeze({
   }),
 })
 
-export function getShipInfo(ship: VoiceChannel, doc: View | null = null): ShipInfo {
+export function getShipInfo(
+  ship: VoiceChannel,
+  doc: View | null = null,
+): ShipInfo {
   if (!doc) {
     doc = nlp(ship.name)
   }

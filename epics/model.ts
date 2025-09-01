@@ -25,7 +25,9 @@ export async function log(
   }
   const guild = await client.guilds.fetch(guildId)
   if (guild && guild.available) {
-    const logChannel = (await guild.channels.fetch()).find((c) => c?.name === 'sharon-log')
+    const logChannel = (await guild.channels.fetch()).find((c) =>
+      c?.name === 'sharon-log'
+    )
     if (logChannel && logChannel instanceof Discord.TextChannel) {
       await logChannel.send(message)
     } else {

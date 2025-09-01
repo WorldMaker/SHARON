@@ -12,8 +12,10 @@ export default function checkAllEpic(
 ) {
   return action.pipe(
     ofType(ActionType.CheckAll),
-    concatMap(() => from(client.guilds.fetch().then(guilds => guilds.keys()))),
-    concatMap(keys => from(keys)),
+    concatMap(() =>
+      from(client.guilds.fetch().then((guilds) => guilds.keys()))
+    ),
+    concatMap((keys) => from(keys)),
     map((guildId) => checkGuild(guildId)),
   )
 }

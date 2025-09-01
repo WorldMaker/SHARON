@@ -40,7 +40,10 @@ export default function checkFleetEpic(
         state.value.guilds[action.fleet.guildId].fleets[action.fleet.id]
       const checkShips = Object.keys(fleet.ships)
         .map((key) => checkShip(info, fleet.ships[key].info) as Action)
-      for (const subChannel of (channel as CategoryChannel).children.valueOf().values()) {
+      for (
+        const subChannel of (channel as CategoryChannel).children.valueOf()
+          .values()
+      ) {
         const subInfo = getChannelInfo(subChannel)
         if (subInfo && isShip(subInfo) && !fleet.ships[subInfo.id]) {
           checkShips.push(addedShip(info, subInfo), checkShip(info, subInfo))

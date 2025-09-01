@@ -33,7 +33,7 @@ try {
 
 client.on('error', (err) => console.error(err))
 const readyPromise = new Promise<Discord.Client<true>>((resolve) => {
-  client.on('clientReady', readyClient => {
+  client.on('clientReady', (readyClient) => {
     console.log(`Logged in as ${readyClient.user.tag}!`)
     resolve(readyClient)
   })
