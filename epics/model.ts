@@ -5,11 +5,11 @@ const FleetStatusChannel = 'fleet-status'
 export const ShoutMode = true
 
 export interface DiscordDependency {
-  client: Discord.Client
+  client: Discord.Client<true>
 }
 
 export async function log(
-  client: Discord.Client,
+  client: Discord.Client<true>,
   guildId: string | null,
   message: string | null,
 ) {
@@ -23,9 +23,9 @@ export async function log(
     console.log(message)
     return
   }
-  const guild = client.guilds.get(guildId)
+  const guild = await client.guilds.fetch(guildId)
   if (guild && guild.available) {
-    const logChannel = guild.channels.find((c) => c.name === 'sharon-log')
+    const logChannel = (await guild.channels.fetch()).find((c) => c?.name === 'sharon-log')
     if (logChannel && logChannel instanceof Discord.TextChannel) {
       await logChannel.send(message)
     } else {
@@ -37,7 +37,7 @@ export async function log(
 }
 
 export async function sendFleetStatus(
-  client: Discord.Client,
+  client: Discord.Client<true>,
   guildId: string,
   fleetId: string,
   message: string | null,

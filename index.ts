@@ -21,12 +21,6 @@ const client = new Discord.Client({
   ],
 })
 
-const epicMiddleware = createEpicMiddleware<Action, Action, Store>({
-  dependencies: {
-    client,
-  },
-})
-
 let baseState: any /* Store | undefined */ = undefined
 try {
   const storeFile = await Deno.readTextFile(StoreFile)
@@ -37,10 +31,13 @@ try {
   console.warn('No previous state', err)
 }
 
-const store = createStore(reducer, baseState, applyMiddleware(epicMiddleware))
-
 client.on('error', (err) => console.error(err))
-client.on('ready', () => console.log(`Logged in as ${client.user.tag}!`))
+const readyPromise = new Promise<Discord.Client<true>>((resolve) => {
+  client.on('ready', readyClient => {
+    console.log(`Logged in as ${readyClient.user.tag}!`)
+    resolve(readyClient)
+  })
+})
 client.on(
   'channelUpdate',
   (oldChannel, newChannel) =>
@@ -53,8 +50,19 @@ client.on(
 )
 
 await client.login(BotToken)
-await client.user.setPresence({
-  game: { name: 'ALL THE SHIPS', type: 'WATCHING' },
+
+const readyClient = await readyPromise
+
+const epicMiddleware = createEpicMiddleware<Action, Action, Store>({
+  dependencies: {
+    client: readyClient,
+  },
+})
+
+const store = createStore(reducer, baseState, applyMiddleware(epicMiddleware))
+
+await readyClient.user.setPresence({
+  activities: [{ name: 'ALL THE SHIPS', state: 'WATCHING' }],
 })
 
 epicMiddleware.run(rootEpic)
