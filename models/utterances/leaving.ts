@@ -1,4 +1,4 @@
-import { nlp } from '../index.ts'
+import { nlp, View } from '../index.ts'
 
 export enum LeavingType {
   Now = 'now',
@@ -30,10 +30,10 @@ export interface LeavingUtterance {
 
 export default function examineForLeaving(
   utterance: string,
-  doc: any = null,
+  doc: View | null = null,
 ): LeavingUtterance | null {
   if (!doc) {
-    doc = (nlp as any)(utterance)
+    doc = nlp(utterance)
   }
 
   if (!doc.has('(go|going|leave|leaving)')) {

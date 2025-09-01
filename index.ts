@@ -7,7 +7,7 @@ import rootEpic from './epics/index.ts'
 import channelUpdate from './events/channel-update.ts'
 import voiceStateUpdate from './events/voice-state-update.ts'
 import reducer from './reducers/index.ts'
-import { Store } from './models/store/index.ts'
+import { initialState, Store } from './models/store/index.ts'
 
 const BotToken = Deno.env.get('BOT_TOKEN')
 
@@ -21,11 +21,11 @@ const client = new Discord.Client({
   ],
 })
 
-let baseState: any /* Store | undefined */ = undefined
+let baseState: Store = initialState
 try {
   const storeFile = await Deno.readTextFile(StoreFile)
   if (typeof storeFile === 'string') {
-    baseState = JSON.parse(storeFile)
+    baseState = JSON.parse(storeFile) as Store
   }
 } catch (err) {
   console.warn('No previous state', err)

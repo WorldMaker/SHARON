@@ -7,4 +7,6 @@ import { ShipInfo } from './ship.ts'
 
 nlp.plugin(nlpPlugin)
 
+export type View = ReturnType<typeof nlp>
+
 export { ChannelType, type FleetInfo, nlp, type PlayerInfo, type ShipInfo }

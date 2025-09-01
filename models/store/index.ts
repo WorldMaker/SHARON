@@ -9,3 +9,7 @@ export interface GuildStore {
 export interface Store {
   readonly guilds: GuildStore
 }
+
+export const initialState: Store = {
+  guilds: {},
+}

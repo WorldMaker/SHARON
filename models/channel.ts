@@ -11,7 +11,7 @@ import { getShipInfo } from './ship.ts'
 
 export function getChannelInfo(channel: Channel): FleetInfo | ShipInfo | null {
   if (channel instanceof GuildChannel) {
-    const doc = (nlp as any)(channel.name)
+    const doc = nlp(channel.name)
     if (channel instanceof CategoryChannel) {
       if (doc.has('#Fleet')) {
         return getFleetInfo(channel, doc)
