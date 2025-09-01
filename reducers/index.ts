@@ -1,4 +1,4 @@
-import produce from 'immer'
+import { produce } from 'immer'
 import { Action } from '../actions/index.ts'
 import { Store } from '../models/store/index.ts'
 import fleetReducer from './fleet.ts'
