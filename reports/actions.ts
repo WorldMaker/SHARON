@@ -1,4 +1,4 @@
-import { distanceInWordsToNow, subMilliseconds } from 'date-fns'
+import { formatDistanceToNow, subMilliseconds } from 'date-fns'
 import { Action, ActionType } from '../actions/index.ts'
 
 export default function actionReport (action: Action) {
@@ -8,7 +8,7 @@ export default function actionReport (action: Action) {
     case ActionType.AddedShip:
       return [action.fleet.guildId, `**Added ship:** ${action.fleet.name} ${action.ship.name}`]
     case ActionType.AlarmPlayerActivity:
-      return [action.fleet.guildId, `🚨 ${action.player.name} has been active for ${distanceInWordsToNow(subMilliseconds(new Date(), action.duration))}`]
+      return [action.fleet.guildId, `🚨 ${action.player.name} has been active for ${formatDistanceToNow(subMilliseconds(new Date(), action.duration))}`]
     case ActionType.AlarmShipBaby:
       return [action.fleet.guildId, `🚨 ${action.fleet.name} ${action.ship.name} has ${action.babies} Discord babies`]
     case ActionType.AlarmShipLow:
