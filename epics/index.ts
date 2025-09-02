@@ -4,8 +4,9 @@ import playerActivityAlarmEpic from './alarms/player-activity.ts'
 import shipCountAlarmsEpic from './alarms/ship-counts.ts'
 import basicLoggingEpic from './basic-logging.ts'
 import checkAllEpic from './checks/all.ts'
-import checkGuildEpic from './checks/guild.ts'
 import checkFleetEpic from './checks/fleet.ts'
+import { checkGuildShipsEpic } from './checks/guild-ships.ts'
+import checkGuildEpic from './checks/guild.ts'
 import checkShipEpic from './checks/ship.ts'
 import checkSometimesEpic from './checks/sometimes.ts'
 import reportFleetStatusEpic from './fleet-status.ts'
@@ -17,6 +18,7 @@ const rootEpic = combineEpics(
   checkAllEpic,
   checkFleetEpic,
   checkGuildEpic,
+  checkGuildShipsEpic,
   checkShipEpic,
   checkSometimesEpic,
   playerActivityEpic,

@@ -62,7 +62,7 @@ const epicMiddleware = createEpicMiddleware<Action, Action, Store>({
 const store = createStore(reducer, baseState, applyMiddleware(epicMiddleware))
 
 await readyClient.user.setPresence({
-  activities: [{ name: 'ALL THE SHIPS', state: 'WATCHING' }],
+  activities: [{ name: 'ALL THE SHIPS', type: Discord.ActivityType.Watching }],
 })
 
 epicMiddleware.run(rootEpic)
