@@ -40,6 +40,11 @@ export default function actionReport(action: Action) {
         action.fleet.guildId,
         `**Ship change:** ${action.fleet.name} ${action.oldShip.name} ➡ ${action.ship.name}`,
       ]
+    case ActionType.CreatedGuildShip:
+      return [
+        action.ship.guildId,
+        `Created guild ship: ${action.ship.name}`,
+      ]
     case ActionType.CheckGuild:
       return [action.guildId, '**Reviewing all fleets**']
     case ActionType.CheckFleet:
@@ -73,6 +78,11 @@ export default function actionReport(action: Action) {
       ]
     case ActionType.NewFleet:
       return [action.fleet.guildId, `**New fleet:** ${action.fleet.name}`]
+    case ActionType.RemovedGuildShip:
+      return [
+        action.guildId,
+        `Removed guild ship: ${action.rareId}`,
+      ]
     case ActionType.UnalarmShipBaby:
       return [
         action.fleet.guildId,
@@ -82,6 +92,11 @@ export default function actionReport(action: Action) {
       return [
         action.fleet.guildId,
         `${action.fleet.name} ${action.ship.name} has filled back up`,
+      ]
+    case ActionType.UpdatedGuildShip:
+      return [
+        action.ship.guildId,
+        `Updated guild ship: ${action.ship.name}`,
       ]
   }
   return [null, action.type]

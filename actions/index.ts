@@ -1,4 +1,10 @@
 import { checkFleet, closedFleet, FleetAction, newFleet } from './fleet.ts'
+import {
+  createdGuildShip,
+  GuildShipAction,
+  removedGuildShip,
+  updatedGuildShip,
+} from './guild-ship.ts'
 import { checkAll, checkGuild, GuildAction } from './guild.ts'
 import {
   activePlayer,
@@ -29,14 +35,17 @@ export enum ActionType {
   CheckFleet = 'FLEET_CHECK',
   CheckShip = 'SHIP_CHECK',
   ClosedFleet = 'FLEET_CLOSED',
+  CreatedGuildShip = 'GUILD_SHIP_CREATED',
   DeactivePlayer = 'PLAYER_DEACTIVE',
   DroppedShip = 'SHIP_DROPPED',
   JoinedShip = 'SHIP_JOINED',
   LeftShip = 'SHIP_LEFT',
   NewFleet = 'FLEET_NEW',
   Other = '__OTHER_ACTIONS__', // For default typing in case statements
+  RemovedGuildShip = 'GUILD_SHIP_REMOVED',
   UnalarmShipBaby = 'SHIP_BABY_REMOVE_ALARM',
   UnalarmShipLow = 'SHIP_LOW_REMOVE_ALARM',
+  UpdatedGuildShip = 'GUILD_SHIP_UPDATED',
 }
 
 export interface OtherAction {
@@ -46,6 +55,7 @@ export interface OtherAction {
 export type Action =
   | FleetAction
   | GuildAction
+  | GuildShipAction
   | PlayerAction
   | ShipAction
   | OtherAction
@@ -60,9 +70,12 @@ export {
   checkGuild,
   checkShip,
   closedFleet,
+  createdGuildShip,
   deactivePlayer,
   droppedShip,
   joinedShip,
   leftShip,
   newFleet,
+  removedGuildShip,
+  updatedGuildShip,
 }

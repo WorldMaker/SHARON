@@ -2,13 +2,18 @@ import { Draft } from 'immer'
 import { Store } from '../models/store/index.ts'
 import { FleetInfo, PlayerInfo, ShipInfo } from '../models/index.ts'
 
-export function getFleet(draft: Draft<Store>, info: FleetInfo) {
-  let guild = draft.guilds[info.guildId]
+export function getGuild(draft: Draft<Store>, guildId: string) {
+  let guild = draft.guilds[guildId]
   if (!guild) {
-    guild = draft.guilds[info.guildId] = {
+    guild = draft.guilds[guildId] = {
       fleets: {},
     }
   }
+  return guild
+}
+
+export function getFleet(draft: Draft<Store>, info: FleetInfo) {
+  const guild = getGuild(draft, info.guildId)
   let fleet = guild.fleets[info.id]
   if (!fleet) {
     fleet = guild.fleets[info.id] = {
@@ -19,6 +24,14 @@ export function getFleet(draft: Draft<Store>, info: FleetInfo) {
     }
   }
   return fleet
+}
+
+export function getGuildShips(draft: Draft<Store>, guildId: string) {
+  const guild = getGuild(draft, guildId)
+  if (!guild.guildShips) {
+    guild.guildShips = {}
+  }
+  return guild.guildShips
 }
 
 export function getShip(
