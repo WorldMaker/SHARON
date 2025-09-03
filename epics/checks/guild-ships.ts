@@ -12,7 +12,12 @@ import {
   withLatestFrom,
 } from 'rxjs'
 import { Action, ActionType } from '../../actions/index.ts'
-import { CategoryChannel, ChannelType, Collection, GuildEmoji } from 'discord.js'
+import {
+  CategoryChannel,
+  ChannelType,
+  Collection,
+  GuildEmoji,
+} from 'discord.js'
 import nlp from 'compromise'
 import {
   getGuildShipChannelName,
@@ -148,7 +153,9 @@ export function checkGuildShipsEpic(
     ),
     mergeMap(async ({ guildId, fleetId, ship, rareShip }) => {
       const rareShipInfo = getGuildShipInfo(guildId, fleetId, ship.id, rareShip)
-      const currentShipName = client.guilds.resolve(guildId)!.channels.resolve(ship.id)?.name
+      const currentShipName = client.guilds.resolve(guildId)!.channels.resolve(
+        ship.id,
+      )?.name
       const rareShipName = getGuildShipChannelName(rareShipInfo)
       if (
         currentShipName !== rareShipName

@@ -83,7 +83,7 @@ export function getGuildShipChannelName(ship: GuildShipInfo): string {
       return `${ship.name} 4️⃣`
     case 3:
       return `${ship.name} 3️⃣`
-    case 2: 
+    case 2:
       return `${ship.name} 2️⃣`
     default:
       return ship.name
