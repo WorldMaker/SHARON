@@ -12,12 +12,7 @@ import {
   withLatestFrom,
 } from 'rxjs'
 import { Action, ActionType } from '../../actions/index.ts'
-import {
-  CategoryChannel,
-  ChannelType,
-  Collection,
-  GuildEmoji,
-} from 'discord.js'
+import { CategoryChannel, ChannelType } from 'discord.js'
 import nlp from 'compromise'
 import {
   getGuildShipChannelName,

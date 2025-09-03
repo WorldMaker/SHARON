@@ -1,4 +1,3 @@
-import * as Discord from 'discord.js'
 import { ChannelType } from './channel-type.ts'
 import { nlp } from './index.ts'
 import { ShipInfo, shipTypes } from './ship.ts'
