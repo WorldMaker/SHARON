@@ -65,7 +65,8 @@ export function checkGuildShipsEpic(
     switchMap(
       async ([action, state]): Promise<NoGuildShips | CheckGuildShips> => {
         const guildId = action.guildId
-        const fleet = client.guilds.resolve(guildId)?.channels.valueOf().find(
+        const guild = client.guilds.resolve(guildId)
+        const fleet = guild?.channels.valueOf().find(
           (c) =>
             c instanceof CategoryChannel &&
             nlp(c.name).match('guild ships'),
@@ -147,9 +148,12 @@ export function checkGuildShipsEpic(
     ),
     mergeMap(async ({ guildId, fleetId, ship, rareShip }) => {
       const rareShipInfo = getGuildShipInfo(guildId, fleetId, ship.id, rareShip)
+      const currentShipName = client.guilds.resolve(guildId)!.channels.resolve(
+        ship.id,
+      )?.name
+      const rareShipName = getGuildShipChannelName(rareShipInfo)
       if (
-        ship.name !== rareShipInfo.name ||
-        ship.shipType !== rareShipInfo.shipType
+        currentShipName !== rareShipName
       ) {
         const guild = client.guilds.resolve(guildId)!
         const channel = guild.channels.resolve(ship.id)
