@@ -1,3 +1,4 @@
+import * as Discord from 'discord.js'
 import { ChannelType } from './channel-type.ts'
 import { nlp } from './index.ts'
 import { ShipInfo, shipTypes } from './ship.ts'
@@ -82,7 +83,7 @@ export function getGuildShipChannelName(ship: GuildShipInfo): string {
       return `${ship.name} 4️⃣`
     case 3:
       return `${ship.name} 3️⃣`
-    case 2:
+    case 2: 
       return `${ship.name} 2️⃣`
     default:
       return ship.name
